@@ -1,7 +1,5 @@
 import React from 'react'
-
-const data = ['Siemens','Schindler','Kone','Otis','Thyssen','Bosch','Mitsubishi','Hyundai']
-
+const data = ['KONE','Schindler','Wittur','Otis','KLEEMANN','Thyssen','Bosch','Hyundai']
 export default function Logos() {
   return (
     <section className="section !py-10 border-y border-neutral-900/60">

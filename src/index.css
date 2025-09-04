@@ -2,14 +2,13 @@
 
 /* Tailwind v4 tokens */
 @theme {
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans";
   --radius: 16px;
 
   --color-brand: #4f46e5;
   --shadow-brand: 0 10px 30px rgb(79 70 229 / 0.30);
 }
 
-/* Global */
 html { scroll-behavior: auto; } /* Lenis devralacak */
 body {
   font-family: var(--font-sans);
@@ -19,13 +18,15 @@ body {
 /* Helpers */
 .section { @apply mx-auto max-w-[1200px] px-4 py-16 md:py-24; }
 .card { @apply rounded-2xl border border-neutral-800 bg-neutral-900/40 backdrop-blur; }
+.muted { @apply text-neutral-300; }
+.small { @apply text-sm text-neutral-400; }
 
 .btn { @apply inline-flex items-center rounded-xl px-5 py-3 text-sm font-semibold transition; }
 .btn-primary { background: var(--color-brand); box-shadow: var(--shadow-brand); @apply text-white; }
 .btn-primary:hover { @apply bg-indigo-600; }
 .btn-ghost { @apply border border-neutral-800 bg-neutral-900 hover:bg-neutral-800; }
 
-/* Sticky header blur state */
+/* Sticky header blur */
 .header-wrap { @apply sticky top-0 z-50 transition; }
 .header-blur { @apply backdrop-blur bg-neutral-950/60 border-b border-neutral-800; }
 
