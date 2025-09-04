@@ -1,68 +1,35 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@import "tailwindcss";
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+/* Tailwind v4 tokens */
+@theme {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+  --radius: 16px;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --color-brand: #4f46e5;
+  --shadow-brand: 0 10px 30px rgb(79 70 229 / 0.30);
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
+/* Global */
+html { scroll-behavior: auto; } /* Lenis devralacak */
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  font-family: var(--font-sans);
+  @apply bg-neutral-950 text-neutral-100 antialiased;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
+/* Helpers */
+.section { @apply mx-auto max-w-[1200px] px-4 py-16 md:py-24; }
+.card { @apply rounded-2xl border border-neutral-800 bg-neutral-900/40 backdrop-blur; }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
+.btn { @apply inline-flex items-center rounded-xl px-5 py-3 text-sm font-semibold transition; }
+.btn-primary { background: var(--color-brand); box-shadow: var(--shadow-brand); @apply text-white; }
+.btn-primary:hover { @apply bg-indigo-600; }
+.btn-ghost { @apply border border-neutral-800 bg-neutral-900 hover:bg-neutral-800; }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
+/* Sticky header blur state */
+.header-wrap { @apply sticky top-0 z-50 transition; }
+.header-blur { @apply backdrop-blur bg-neutral-950/60 border-b border-neutral-800; }
+
+/* Logos marquee */
+@keyframes marquee { 0% { transform: translateX(0) } 100% { transform: translateX(-50%) } }
+.marquee { display: flex; width: max-content; gap: 3rem; animation: marquee 25s linear infinite; }
+.logo-tile { @apply opacity-70 hover:opacity-100 transition; }

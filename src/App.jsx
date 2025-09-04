@@ -1,35 +1,50 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import React, { useLayoutEffect, useRef } from 'react'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import Header from './components/Header'
+import Hero from './components/hero'
+import Logos from './components/Logos'
+import Features from './components/Features'
+import Products from './components/Products'
+import Projects from './components/Projects'
+import FAQ from './components/FAQ'
+import CTA from './components/CTA'
+import Footer from './components/Footer'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+gsap.registerPlugin(ScrollTrigger)
+
+export default function App() {
+  const pageRef = useRef(null)
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      // giriş staggers
+      gsap.from('[data-stagger]', {
+        opacity: 0, y: 24, duration: 0.8, ease: 'power2.out', stagger: 0.08, delay: 0.15
+      })
+      // section reveal
+      document.querySelectorAll('[data-reveal]').forEach((el) => {
+        gsap.from(el, {
+          opacity: 0, y: 24, duration: 0.8, ease: 'power2.out',
+          scrollTrigger: { trigger: el, start: 'top 85%' }
+        })
+      })
+    }, pageRef)
+    return () => ctx.revert()
+  }, [])
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div ref={pageRef}>
+      <Header />
+      <Hero />
+      <Logos />
+      <Features />
+      <Products />
+      <Projects />
+      <FAQ />
+      <CTA />
+      <Footer />
+    </div>
   )
 }
-
-export default App
