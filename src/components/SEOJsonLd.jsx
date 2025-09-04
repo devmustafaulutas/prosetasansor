@@ -12,6 +12,7 @@ export default function SEOJsonLd() {
     name: 'Proset Asansör',
     url: base,
     logo: `${base}/logo.png`,
+    sameAs: ['https://www.instagram.com/prosetelevator/'], // <-- eklendi
     contactPoint: [{
       '@type': 'ContactPoint',
       telephone: '+90-XXX-XXX-XX-XX',
@@ -31,26 +32,13 @@ export default function SEOJsonLd() {
     { path: '/haberler', name: 'Haberler' },
     { path: '/iletisim', name: 'İletişim' },
   ]
-  const crumbs = [
-    {
-      '@type': 'ListItem', position: 1, name: 'Ana Sayfa', item: `${base}/`
-    }
-  ]
-  const hit = crumbsMap.find(c => c.path === pathname) || null
+  const crumbs = [{ '@type': 'ListItem', position: 1, name: 'Ana Sayfa', item: `${base}/` }]
+  const hit = crumbsMap.find(c => c.path === pathname)
   if (hit && hit.path !== '/') {
-    crumbs.push({
-      '@type': 'ListItem',
-      position: 2,
-      name: hit.name,
-      item: `${base}${hit.path}`
-    })
+    crumbs.push({ '@type': 'ListItem', position: 2, name: hit.name, item: `${base}${hit.path}` })
   }
 
-  const breadcrumb = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: crumbs
-  }
+  const breadcrumb = { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: crumbs }
 
   return (
     <>
