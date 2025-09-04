@@ -42,6 +42,7 @@ export default function Home() {
           <div className="mt-6 flex justify-center gap-3" data-reveal>
             <a className="btn btn-primary" href="/iletisim">İletişime Geç</a>
             <a className="btn btn-ghost" href="/hizmetler">Hizmetlere Bak</a>
+            <a className="btn btn-ghost" href="/haberler">Haberler</a>
           </div>
         </div>
       </section>

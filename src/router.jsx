@@ -9,6 +9,8 @@ const Products = lazy(() => import('./pages/Products'))
 const Projects = lazy(() => import('./pages/Projects'))
 const Certificates = lazy(() => import('./pages/Certificates'))
 const Contact = lazy(() => import('./pages/Contact'))
+const News = lazy(() => import('./pages/News'))          
+const Post = lazy(() => import('./pages/Post'))        
 const NotFound = lazy(() => import('./pages/NotFound'))
 
 const loader = (el) => <Suspense fallback={<div className="section">Yükleniyor…</div>}>{el}</Suspense>
@@ -24,6 +26,8 @@ export default createBrowserRouter([
       { path: '/urunler', element: loader(<Products />) },
       { path: '/projeler', element: loader(<Projects />) },
       { path: '/belgeler', element: loader(<Certificates />) },
+      { path: '/haberler', element: loader(<News />) },       
+      { path: '/haber/:slug', element: loader(<Post />) },   
       { path: '/iletisim', element: loader(<Contact />) },
       { path: '*', element: loader(<NotFound />) },
     ],
