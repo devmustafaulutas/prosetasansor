@@ -1,36 +1,33 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@plugin "@tailwindcss/forms";
 
-/* Tailwind v4 tokens */
 @theme {
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans";
   --radius: 16px;
-
-  --color-brand: #4f46e5;
-  --shadow-brand: 0 10px 30px rgb(79 70 229 / 0.30);
+  --color-brand: #e11d2f;  
+  --bg: #0b0b0b;        
+  --ink: #e5e7eb;        
+  --card: rgba(255,255,255,.05);
+  --shadow-brand: 0 10px 30px rgb(225 29 47 / .25);
 }
 
-html { scroll-behavior: auto; } /* Lenis devralacak */
-body {
-  font-family: var(--font-sans);
-  @apply bg-neutral-950 text-neutral-100 antialiased;
-}
+* { box-sizing: border-box }
+html,body,#root { height: 100% }
+body { font-family: var(--font-sans); background: var(--bg); color: var(--ink); }
 
-/* Helpers */
 .section { @apply mx-auto max-w-[1200px] px-4 py-16 md:py-24; }
-.card { @apply rounded-2xl border border-neutral-800 bg-neutral-900/40 backdrop-blur; }
-.muted { @apply text-neutral-300; }
-.small { @apply text-sm text-neutral-400; }
-
-.btn { @apply inline-flex items-center rounded-xl px-5 py-3 text-sm font-semibold transition; }
-.btn-primary { background: var(--color-brand); box-shadow: var(--shadow-brand); @apply text-white; }
-.btn-primary:hover { @apply bg-indigo-600; }
+.card { background: var(--card); @apply rounded-2xl border border-neutral-800; }
+.btn { @apply inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition; }
+.btn-primary { background: var(--color-brand); color: #fff; box-shadow: var(--shadow-brand); }
+.btn-primary:hover { filter: brightness(.95) }
 .btn-ghost { @apply border border-neutral-800 bg-neutral-900 hover:bg-neutral-800; }
+.small { @apply text-sm text-neutral-400; }
+.muted { @apply text-neutral-300; }
 
-/* Sticky header blur */
 .header-wrap { @apply sticky top-0 z-50 transition; }
-.header-blur { @apply backdrop-blur bg-neutral-950/60 border-b border-neutral-800; }
+.header-blur { @apply backdrop-blur bg-black/50 border-b border-neutral-800; }
 
-/* Logos marquee */
-@keyframes marquee { 0% { transform: translateX(0) } 100% { transform: translateX(-50%) } }
-.marquee { display: flex; width: max-content; gap: 3rem; animation: marquee 25s linear infinite; }
-.logo-tile { @apply opacity-70 hover:opacity-100 transition; }
+@keyframes marquee { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+.marquee { display:flex; width:max-content; gap:3rem; animation: marquee 25s linear infinite }
+.logo-tile { @apply opacity-70 hover:opacity-100 transition }
