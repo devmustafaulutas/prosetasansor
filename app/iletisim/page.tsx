@@ -19,6 +19,7 @@ import {
   Wrench
 } from 'lucide-react';
 
+/* --------- TİPLER --------- */
 type Topic =
   | 'Montaj'
   | 'Modernizasyon'
@@ -38,12 +39,49 @@ const TOPICS: Topic[] = [
 
 type Mode = 'Teklif' | 'Servis' | 'Genel';
 
+type FormState = {
+  name: string;
+  phone: string;
+  email: string;
+  message: string;
+  website: string; // honeypot
+};
+
+/* --------- STATİK MOD İÇİN SABİTLER --------- */
+const CONTACT_MODE = process.env.NEXT_PUBLIC_CONTACT_MODE ?? 'disabled'; // 'disabled' | 'api'
+const CONTACT_EMAIL = 'prosetasansor@gmail.com';
+
+/* --------- YARDIMCI FONKSİYONLAR --------- */
+function buildSummary({
+  mode, topics, form
+}: { mode: Mode; topics: Topic[]; form: FormState }) {
+  const lines = [
+    `📝 Mod: ${mode}`,
+    topics.length ? `📌 Konular: ${topics.join(', ')}` : `📌 Konular: (seçilmedi)`,
+    `👤 Ad: ${form.name || '-'}`,
+    `📞 Telefon: ${form.phone || '-'}`,
+    `✉️ E-posta: ${form.email || '-'}`,
+    '',
+    'Mesaj:',
+    form.message || '(boş)',
+    '',
+    `— Proset Asansör web formu • ${new Date().toLocaleString('tr-TR')}`,
+  ];
+  return lines.join('\n');
+}
+
+function buildMailto({ subject, body }: { subject: string; body: string }) {
+  const s = encodeURIComponent(subject);
+  const b = encodeURIComponent(body);
+  return `mailto:${CONTACT_EMAIL}?subject=${s}&body=${b}`;
+}
+
 export default function ContactPage() {
   const [mode, setMode] = React.useState<Mode>('Teklif');
   const [topics, setTopics] = React.useState<Topic[]>([]);
   const [loading, setLoading] = React.useState(false);
 
-  const [form, setForm] = React.useState({
+  const [form, setForm] = React.useState<FormState>({
     name: '',
     phone: '',
     email: '',
@@ -82,9 +120,46 @@ export default function ContactPage() {
         ? 'Arıza/belirti, marka/model, adres, erişim bilgisi vb.'
         : 'Kısa mesajınızı yazın…';
 
+  /* --------- GÖNDER --------- */
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+
+    // ❗ API KAPALI: mailto + clipboard + toast
+    if (CONTACT_MODE === 'disabled') {
+      try {
+        const subject = `[Web İletişim • ${mode}] ${form.name || 'İsimsiz'}`;
+        const body = buildSummary({ mode, topics, form });
+
+        // Panoya kopyala (izin olmazsa sorun değil)
+        try { await navigator.clipboard?.writeText(body); } catch {}
+
+        // Mail uygulamasını aç
+        const url = buildMailto({ subject, body });
+        window.location.href = url;
+
+        toast({
+          variant: 'success',
+          title: 'E-posta uygulamanız açılıyor',
+          description: 'Mesaj içeriği panoya da kopyalandı. Göndermeden önce kontrol edebilirsiniz.',
+        });
+
+        // form reset
+        setForm({ name: '', phone: '', email: '', message: '', website: '' });
+        setTopics([]);
+      } catch (err: any) {
+        toast({
+          variant: 'destructive',
+          title: 'E-posta açılamadı',
+          description: 'Tarayıcınız mail uygulaması açmadıysa WhatsApp ile iletebilirsiniz.',
+        });
+      } finally {
+        setLoading(false);
+      }
+      return;
+    }
+
+    // ✅ API AÇIK: mevcut POST akışı
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
@@ -102,19 +177,16 @@ export default function ContactPage() {
         variant: 'success',
         title: 'Mesajınız alındı',
         description: 'En kısa sürede sizinle iletişime geçeceğiz.',
-      })
+      });
 
-      // form reset
       setForm({ name: '', phone: '', email: '', message: '', website: '' });
       setTopics([]);
-      // istersen aşağıda forma scroll:
-      // document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     } catch (err: any) {
       toast({
         variant: 'destructive',
         title: 'Mesaj gönderilemedi',
         description: err?.message || 'Bir hata oluştu',
-      })
+      });
     } finally {
       setLoading(false);
     }
@@ -126,7 +198,7 @@ export default function ContactPage() {
       <PageHeader title="İletişim" bgImage="/asansor-1.jpg" objectPosition="50% 45%" />
 
       {/* Üst vaat pill'leri */}
-      <section className="bg-muted\/30">
+      <section className="bg-muted/30">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex flex-wrap justify-center gap-2">
             {[
@@ -146,22 +218,16 @@ export default function ContactPage() {
       </section>
 
       {/* Form + Bilgiler */}
-      <section className="relative bg-muted\/30">
+      <section className="relative bg-muted/30">
         {/* soft aurora */}
         <div className="pointer-events-none absolute inset-0 -z-10">
           <div
             className="absolute -left-20 -top-24 h-96 w-96 rounded-full blur-3xl opacity-25"
-            style={{
-              background:
-                'radial-gradient(closest-side, rgba(225,29,72,.35), transparent 70%)'
-            }}
+            style={{ background: 'radial-gradient(closest-side, rgba(225,29,72,.35), transparent 70%)' }}
           />
           <div
             className="absolute -right-20 top-1/3 h-[420px] w-[420px] rounded-full blur-3xl opacity-20"
-            style={{
-              background:
-                'radial-gradient(closest-side, rgba(96,165,250,.35), transparent 70%)'
-            }}
+            style={{ background: 'radial-gradient(closest-side, rgba(96,165,250,.35), transparent 70%)' }}
           />
         </div>
 
@@ -173,38 +239,21 @@ export default function ContactPage() {
                 <InfoRow
                   icon={<Phone className="h-5 w-5" />}
                   title="Telefon"
-                  body={
-                    <a href="tel:+905532776781" className="hover:text-red-400">
-                      +90 553 277 67 81
-                    </a>
-                  }
+                  body={<a href="tel:+905532776781" className="hover:text-red-400">+90 553 277 67 81</a>}
                 />
                 <InfoRow
                   icon={<Mail className="h-5 w-5" />}
                   title="E-posta"
-                  body={
-                    <a
-                      href="mailto:prosetasansor@gmail.com"
-                      className="hover:text-red-400 break-all"
-                    >
-                      prosetasansor@gmail.com
-                    </a>
-                  }
+                  body={<a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-red-400 break-all">{CONTACT_EMAIL}</a>}
                 />
                 <InfoRow
                   icon={<MapPin className="h-5 w-5" />}
                   title="Adres"
-                  body={
-                    <>
-                      KAZIM KARABEKİR MAH. 1682 CAD. 9 B <br />
-                      ETİMESGUT / ANKARA
-                    </>
-                  }
+                  body={<>KAZIM KARABEKİR MAH. 1682 CAD. 9 B <br /> ETİMESGUT / ANKARA</>}
                 />
 
                 <div className="rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-white/80">
-                  Proset Asansör: “Her kata güven, her kata kalite.” Modern teknoloji ve
-                  güvenliği birleştirerek uzun ömürlü çözümler sunuyoruz.
+                  Proset Asansör: “Her kata güven, her kata kalite.” Modern teknoloji ve güvenliği birleştirerek uzun ömürlü çözümler sunuyoruz.
                 </div>
 
                 <div className="flex flex-wrap gap-2">
@@ -215,7 +264,7 @@ export default function ContactPage() {
               </CardContent>
             </Card>
 
-            {/* SAĞ: Şık form */}
+            {/* SAĞ: Form */}
             <div className="lg:col-span-3">
               <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-xl backdrop-blur-md">
                 {/* Üst: segmented + hızlı aksiyonlar */}
@@ -239,6 +288,13 @@ export default function ContactPage() {
                   </div>
                 </div>
 
+                {/* API kapalı bilgilendirme şeridi */}
+                {CONTACT_MODE === 'disabled' && (
+                  <div className="mx-6 mt-4 mb-1 rounded-lg border border-yellow-500/30 bg-yellow-500/10 px-4 py-2 text-sm text-yellow-200">
+                    Şu anda çevrim içi form gönderimi geçici olarak kapalı. <b>“Mesajı Gönder”</b> butonu e-posta uygulamanızı açacaktır. Alternatif olarak WhatsApp’tan yazabilirsiniz.
+                  </div>
+                )}
+
                 <div className="px-6 pt-4 text-white/70 text-sm">{modeLead}</div>
 
                 {/* FORM */}
@@ -250,7 +306,6 @@ export default function ContactPage() {
                     type="tel"
                     value={form.phone}
                     onChange={onChange}
-                    placeholder=""
                     pattern="^\+?\d[\d\s]{9,}$"
                     title="Örn: +90555 222 33 44"
                     required
@@ -264,7 +319,6 @@ export default function ContactPage() {
                     required
                   />
 
-
                   {/* Topics */}
                   <div className="md:col-span-2">
                     <label className="mb-2 block text-sm font-medium">İlgilendiğiniz hizmet(ler)</label>
@@ -277,10 +331,11 @@ export default function ContactPage() {
                             type="button"
                             onClick={() => toggleTopic(t)}
                             aria-pressed={active}
-                            className={`rounded-full border px-3 py-1 text-sm transition ${active
-                              ? 'border-red-500/50 bg-red-500/20 text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,.05)]'
-                              : 'border-white/10 bg-white/5 text-white/80 hover:bg-white/10 hover:border-white/20'
-                              }`}
+                            className={`rounded-full border px-3 py-1 text-sm transition ${
+                              active
+                                ? 'border-red-500/50 bg-red-500/20 text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,.05)]'
+                                : 'border-white/10 bg-white/5 text-white/80 hover:bg-white/10 hover:border-white/20'
+                            }`}
                           >
                             {t}
                           </button>
@@ -321,6 +376,7 @@ export default function ContactPage() {
                       WhatsApp
                     </Button>
                   </div>
+
                   <p className="md:col-span-2 text-xs text-white/60">
                     Gönderimler güvenlik için doğrulanır ve hız sınırı uygulanır.
                   </p>
@@ -334,7 +390,7 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* HARİTA – karartmasız */}
+          {/* HARİTA */}
           <div className="mx-auto mt-10 max-w-6xl overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-xl">
             <iframe
               className="h-[440px] w-full"
@@ -383,7 +439,6 @@ function FloatField({
         pattern={pattern}
         title={title}
         placeholder={placeholder ?? ' '}
-        /* autofill/focus beyazını tamamen söndürür */
         className="peer tech-border h-12 bg-transparent focus:bg-transparent focus-visible:bg-transparent px-4 pt-4"
         aria-label={label}
         autoComplete={name === 'email' ? 'email' : name === 'phone' ? 'tel' : 'on'}
@@ -403,7 +458,6 @@ function FloatField({
     </div>
   );
 }
-
 
 function InfoRow({
   icon,
