@@ -1,263 +1,294 @@
-import Link from "next/link"
-import { WhatsAppButton } from "@/components/whatsapp-button"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { ImageIcon, Play, ExternalLink, Calendar, MapPin, Award, Zap } from "lucide-react"
+"use client";
 
-const galleryItems = [
-  {
-    id: 1,
-    title: "Akıllı Asansör - Teknoloji Merkezi",
-    category: "Asansör",
-    location: "İstanbul, Maslak",
-    date: "2024",
-    image: "/futuristic-elevator-with-glass-panels-and-led-ligh.jpg",
-    description:
-      "AI destekli trafik yönetimi ve quantum güvenlik sistemi ile donatılmış 20 katlık ofis binası projesi.",
-    features: ["Quantum Drive", "AI Traffic Management", "Touchless Control"],
-    type: "image",
-  },
-  {
-    id: 2,
-    title: "Engelli Platformu - Hastane Kompleksi",
-    category: "Engelli Platformu",
-    location: "Ankara, Çankaya",
-    date: "2024",
-    image: "/modern-wheelchair-accessible-platform-lift-with-sa.jpg",
-    description: "Sesli rehberlik sistemi ve otomatik güvenlik sensörleri ile hastane erişilebilirlik projesi.",
-    features: ["Voice Guidance", "Auto Safety", "Weather Protection"],
-    type: "image",
-  },
-  {
-    id: 3,
-    title: "Yürüyen Merdiven - AVM Projesi",
-    category: "Yürüyen Merdiven",
-    location: "İzmir, Bornova",
-    date: "2024",
-    image: "/modern-escalator-with-led-lighting-and-glass-raili.jpg",
-    description: "LED aydınlatma ve enerji geri kazanım sistemi ile modern alışveriş merkezi kurulumu.",
-    features: ["LED Lighting", "Energy Recovery", "Smart Speed Control"],
-    type: "image",
-  },
-  {
-    id: 4,
-    title: "Revizyon Projesi - Tarihi Bina",
-    category: "Revizyon",
-    location: "İstanbul, Beyoğlu",
-    date: "2024",
-    image: "/elevator-modernization-with-digital-displays-and-s.jpg",
-    description: "1970'lerden kalma asansörün AI upgrade paketi ile modernizasyonu.",
-    features: ["RetroFit AI", "IoT Integration", "Energy Optimization"],
-    type: "image",
-  },
-  {
+import { useMemo, useState, useCallback, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import PageHeader from "@/components/PageHeader";
+import { WhatsAppButton } from "@/components/whatsapp-button";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import {
+  ImageIcon,
+  Play,
+  ExternalLink,
+  Calendar,
+  MapPin,
+  Award,
+  Zap,
+  X,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
+
+type Item = {
+  id: number;
+  title: string;
+  category:
+  | "Asansör"
+  | "Montaj"
+  | "Modernizasyon"
+  | "Bakım"
+  | "Kuyu / Ray"
+  | "Kabin & Kapı"
+  | "Buton & Kumanda"
+  | "Yürüyen Merdiven"
+  | "Engelli Platformu"
+  | "Sertifika";
+  location: string;
+  date: string;
+  image: string;
+  description: string;
+  features: string[];
+  type?: "image" | "video";
+};
+
+const ALL_ITEMS: Item[] = [
+
+  { // kumanda/ekipman
     id: 5,
-    title: "Kurulum Süreci - Zaman Atlama",
-    category: "Montaj",
-    location: "Bursa, Nilüfer",
+    title: "Kontrol paneli",
+    category: "Buton & Kumanda",
+    location: "Bursa",
     date: "2024",
-    image: "/placeholder.svg?height=400&width=600&text=Montaj+Video",
-    description: "48 saatlik kurulum sürecinin 2 dakikalık özeti. Robotik montaj teknolojimizi görün.",
-    features: ["Robotic Assembly", "Time-lapse", "Quality Control"],
-    type: "video",
+    image: "/c.jpeg",
+    description: "Kabin üstü acil durdurma ve kontrol arayüzü.",
+    features: ["Acil Stop", "Standart Uyumu"],
   },
+
+  // — montaj / kuyu / ray
   {
     id: 6,
-    title: "Akıllı Bina Entegrasyonu",
-    category: "Sistem Entegrasyonu",
-    location: "Antalya, Konyaaltı",
+    title: "Kuyu montajı",
+    category: "Montaj",
+    location: "Ankara",
     date: "2024",
-    image: "/placeholder.svg?height=400&width=600&text=Smart+Building",
-    description: "IoT sensörler ve yapay zeka ile tam entegre akıllı bina çözümü.",
-    features: ["Full IoT", "Building Management", "Predictive Analytics"],
-    type: "image",
+    image: "/aa.jpeg",
+    description:
+      "TS EN 81-20/50’e uygun kuyu montajı ve şaft içi kablolama.",
+    features: ["EN 81-20/50", "Şaft Düzeni", "Test ve Devreye Alma"],
   },
   {
     id: 7,
-    title: "Quantum Güvenlik Sistemi Demo",
-    category: "Güvenlik",
-    location: "İstanbul, Şişli",
+    title: "Ray ve askı setleri",
+    category: "Kuyu / Ray",
+    location: "İstanbul",
     date: "2024",
-    image: "/placeholder.svg?height=400&width=600&text=Security+Demo",
-    description: "Quantum şifreleme teknolojisi ile güvenlik sisteminin canlı demonstrasyonu.",
-    features: ["Quantum Encryption", "Biometric Access", "Real-time Monitoring"],
-    type: "video",
+    image: "/bbb.jpeg",
+    description: "Ray doğrultma ve ankraj uygulamaları.",
+    features: ["Ray Doğrultma", "Ankraj", "Hassas Ölçüm"],
   },
   {
     id: 8,
-    title: "Enerji Verimli Çözümler",
-    category: "Sürdürülebilirlik",
-    location: "İzmir, Konak",
+    title: "Kuyu üstü detay",
+    category: "Kuyu / Ray",
+    location: "Ankara",
     date: "2024",
-    image: "/placeholder.svg?height=400&width=600&text=Green+Energy",
-    description: "Güneş enerjisi ile çalışan asansör sistemi ve %60 enerji tasarrufu.",
-    features: ["Solar Power", "Energy Recovery", "Carbon Neutral"],
-    type: "image",
+    image: "/bb.jpeg",
+    description: "Kuyu üstü bağlantı ve sınır anahtarı yerleşimi.",
+    features: ["Sınır Anahtarı", "Güvenlik"],
   },
-]
+  {
+    id: 9,
+    title: "Kabin çerçevesi — proje",
+    category: "Kabin & Kapı",
+    location: "Kocaeli",
+    date: "2024",
+    image: "/e.jpeg",
+    description: "Kabin kapısı takoz ve merkezleme işlemleri.",
+    features: ["Merkezleme", "Sessiz Çalışma"],
+  },
+  {
+    id: 10,
+    title: "Kuyu içi kılavuz sistemi",
+    category: "Kuyu / Ray",
+    location: "İzmir",
+    date: "2024",
+    image: "/ee.jpeg",
+    description: "Kılavuz raya ait bağlantı bileşenleri.",
+    features: ["Kılavuz Ray", "Bağlantı Elemanları"],
+  },
+  {
+    id: 11,
+    title: "Kabin kapısı",
+    category: "Kabin & Kapı",
+    location: "Ankara",
+    date: "2024",
+    image: "/aaa.jpeg",
+    description: "Tam boy kapı ve eşik hizalama.",
+    features: ["Hassas Hizalama", "Gürültüsüz Açma-Kapama"],
+  },
+  {
+    id: 12,
+    title: "Kat kapısı ve eşik",
+    category: "Kabin & Kapı",
+    location: "İstanbul",
+    date: "2024",
+    image: "/cccc.jpeg",
+    description: "Kapı kasası montajı ve eşik bağlantısı.",
+    features: ["Kapı Kasası", "Eşik"],
+  },
+  {
+    id: 13,
+    title: "Kuyu dibi — düzen",
+    category: "Kuyu / Ray",
+    location: "İstanbul",
+    date: "2024",
+    image: "/ccccc.jpeg",
+    description: "Kuyu dibi aksesuarlarının yerleşimi.",
+    features: ["Siperlik", "Stopper"],
+  },
+  {
+    id: 14,
+    title: "Kabin kablolama",
+    category: "Montaj",
+    location: "Ankara",
+    date: "2024",
+    image: "/dddd.jpeg",
+    description: "Kabin üstü kablolama ve güvenlik ekipmanları.",
+    features: ["Kablo Yönetimi", "Güvenlik"],
+  },
 
-const categories = [
+  // — pano / makine / elektrik
+  {
+    id: 20,
+    title: "Makine dairesi — pano",
+    category: "Bakım",
+    location: "Kocaeli",
+    date: "2024",
+    image: "/g.jpeg",
+    description: "Kontrol panosu ve kablo yönetimi.",
+    features: ["Pano", "Kablo Düzeni"],
+  },
+  {
+    id: 21,
+    title: "Saha müdahalesi",
+    category: "Bakım",
+    location: "İzmir",
+    date: "2024",
+    image: "/gg.jpeg",
+    description: "Arıza tespiti ve yerinde onarım.",
+    features: ["Arıza Tespiti", "Hızlı Müdahale"],
+  },
+  {
+    id: 22,
+    title: "Elektrik kutusu",
+    category: "Bakım",
+    location: "Ankara",
+    date: "2024",
+    image: "/gggg.jpeg",
+    description: "Saha bağlantı ve test noktaları.",
+    features: ["Bağlantı", "Test"],
+  },
+];
+
+const CATEGORIES = [
   "Tümü",
   "Asansör",
-  "Engelli Platformu",
-  "Yürüyen Merdiven",
-  "Revizyon",
   "Montaj",
-  "Sistem Entegrasyonu",
-  "Güvenlik",
-  "Sürdürülebilirlik",
-]
+  "Modernizasyon",
+  "Bakım",
+  "Kuyu / Ray",
+  "Kabin & Kapı",
+  "Buton & Kumanda",
+  "Yürüyen Merdiven",
+  "Engelli Platformu",
+  "Sertifika",
+] as const;
 
 export default function GalleryPage() {
+  const [cat, setCat] = useState<(typeof CATEGORIES)[number]>("Tümü");
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+  const items = useMemo(
+    () => (cat === "Tümü" ? ALL_ITEMS : ALL_ITEMS.filter((i) => i.category === cat)),
+    [cat]
+  );
+
+  const openLightbox = useCallback((idx: number) => setActiveIndex(idx), []);
+  const closeLightbox = useCallback(() => setActiveIndex(null), []);
+  const prev = useCallback(
+    () => setActiveIndex((i) => (i == null ? i : (i - 1 + items.length) % items.length)),
+    [items.length]
+  );
+  const next = useCallback(
+    () => setActiveIndex((i) => (i == null ? i : (i + 1) % items.length)),
+    [items.length]
+  );
+
+  // klavye
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (activeIndex == null) return;
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowLeft") prev();
+      if (e.key === "ArrowRight") next();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [activeIndex, closeLightbox, prev, next]);
+
   return (
     <div className="min-h-screen">
       <WhatsAppButton />
 
-      {/* Hero Section */}
-      <section className="relative pt-24 pb-16 overflow-hidden geometric-bg">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10">
-          <div className="absolute inset-0 bg-background/95" />
-        </div>
-
-        {/* Floating elements */}
-        <div className="absolute top-20 left-10 w-16 h-16 border-2 border-accent/30 rotate-45 animate-float"></div>
-        <div
-          className="absolute top-32 right-20 w-12 h-12 bg-accent/20 rounded-full animate-float"
-          style={{ animationDelay: "1s" }}
-        ></div>
-
-        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-4xl mx-auto">
-            <div className="mb-6 animate-fade-in-up">
-              <span className="inline-flex items-center space-x-2 bg-gradient-to-r from-accent/20 to-primary/20 px-4 py-2 rounded-full text-sm font-medium text-foreground border border-accent/30">
-                <ImageIcon className="w-4 h-4 text-accent" />
-                <span>Projelerimiz ve Çalışmalarımız</span>
-              </span>
-            </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6 animate-fade-in-up animate-delay-100 text-balance">
-              <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-                Proje Galerisi
-              </span>
-            </h1>
-            <p className="text-xl text-muted-foreground animate-fade-in-up animate-delay-200 text-pretty leading-relaxed">
-              Gerçekleştirdiğimiz projeler ve
-              <span className="text-accent font-semibold"> teknolojik yeniliklerimizi</span> keşfedin
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Filter Tabs */}
-      <section className="py-8 bg-muted/30">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap justify-center gap-2 animate-fade-in-up">
-            {categories.map((category, index) => (
-              <Button
-                key={category}
-                variant={index === 0 ? "default" : "outline"}
-                size="sm"
-                className={`transition-all duration-300 ${
-                  index === 0
-                    ? "bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary"
-                    : "hover:bg-muted tech-border"
-                }`}
-              >
-                {category}
-              </Button>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Gallery Grid */}
-      <section className="py-20">
+      <PageHeader title="Galeri" subtitle="Projelerimizden kareler" bgImage="/asansor-1.jpg" objectPosition="50% 45%" />
+      {/* Grid */}
+      <section className="py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {galleryItems.map((item, index) => (
+            {items.map((item, index) => (
               <Card
                 key={item.id}
-                className={`group hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 animate-fade-in-up hologram-effect tech-border overflow-hidden`}
-                style={{ animationDelay: `${index * 100}ms` }}
+                className="group overflow-hidden border-white/10 bg-white/5 transition-colors" // <- hover:bg... yok
               >
-                <div className="relative aspect-video overflow-hidden">
-                  <img
-                    src={item.image || "/placeholder.svg"}
+                <div
+                  className="relative aspect-video overflow-hidden rounded-t-lg cursor-pointer"
+                  onClick={() => openLightbox(index)}
+                  role="button"
+                >
+                  <Image
+                    src={item.image}
                     alt={item.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    fill
+                    sizes="(max-width:768px) 100vw, 33vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-[1.03] will-change-transform [transform:translateZ(0)]"
                   />
-
-                  {/* Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="absolute bottom-4 left-4 right-4">
-                      <div className="flex items-center justify-between">
-                        <Badge variant="secondary" className="bg-accent/90 text-white border-none">
-                          {item.category}
-                        </Badge>
-                        <div className="flex space-x-2">
-                          {item.type === "video" && (
-                            <Button
-                              size="sm"
-                              variant="secondary"
-                              className="bg-white/20 hover:bg-white/30 text-white border-none"
-                            >
-                              <Play className="w-4 h-4" />
-                            </Button>
-                          )}
-                          <Button
-                            size="sm"
-                            variant="secondary"
-                            className="bg-white/20 hover:bg-white/30 text-white border-none"
-                          >
-                            <ExternalLink className="w-4 h-4" />
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Video indicator */}
+                  {/* overlay KALDIRILDI */}
                   {item.type === "video" && (
-                    <div className="absolute top-4 right-4">
-                      <div className="bg-accent/90 text-white px-2 py-1 rounded-full text-xs flex items-center space-x-1">
-                        <Play className="w-3 h-3" />
-                        <span>Video</span>
-                      </div>
+                    <div className="absolute top-3 right-3 rounded-full bg-black/60 px-2 py-1 text-xs text-white flex items-center gap-1">
+                      <Play className="w-3 h-3" />
+                      Video
                     </div>
                   )}
                 </div>
 
                 <CardContent className="p-6">
-                  <div className="flex items-start justify-between mb-3">
-                    <h3 className="font-bold text-foreground group-hover:text-accent transition-colors duration-300 text-lg leading-tight">
-                      {item.title}
-                    </h3>
-                    <Award className="w-5 h-5 text-accent flex-shrink-0 ml-2" />
+                  <div className="mb-2 flex items-center justify-between">
+                    <h3 className="text-lg font-semibold leading-tight">{item.title}</h3>
+                    <Award className="w-5 h-5 text-accent" />
                   </div>
 
-                  <p className="text-muted-foreground text-sm leading-relaxed mb-4">{item.description}</p>
+                  <p className="text-sm text-white/75 leading-relaxed">{item.description}</p>
 
-                  {/* Features */}
-                  <div className="mb-4">
-                    <div className="flex flex-wrap gap-1">
-                      {item.features.map((feature, idx) => (
-                        <Badge key={idx} variant="outline" className="text-xs bg-accent/5 text-accent border-accent/30">
-                          {feature}
-                        </Badge>
-                      ))}
-                    </div>
+                  <div className="mt-3 flex flex-wrap gap-1.5">
+                    {item.features.map((f, i) => (
+                      <Badge key={i} variant="outline" className="text-xs bg-accent/5 text-accent border-accent/30">
+                        {f}
+                      </Badge>
+                    ))}
+                    <Badge variant="secondary" className="ml-auto bg-accent/80 text-white border-0">
+                      {item.category}
+                    </Badge>
                   </div>
 
-                  {/* Location and Date */}
-                  <div className="flex items-center justify-between text-sm text-muted-foreground pt-4 border-t border-border">
-                    <div className="flex items-center space-x-1">
-                      <MapPin className="w-4 h-4" />
-                      <span>{item.location}</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <Calendar className="w-4 h-4" />
-                      <span>{item.date}</span>
-                    </div>
+                  <div className="mt-4 flex items-center justify-between text-sm text-white/70 pt-3 border-t border-white/10">
+                    <span className="inline-flex items-center gap-1">
+                      <MapPin className="w-4 h-4" /> {item.location}
+                    </span>
+                    <span className="inline-flex items-center gap-1">
+                      <Calendar className="w-4 h-4" /> {item.date}
+                    </span>
                   </div>
                 </CardContent>
               </Card>
@@ -266,79 +297,109 @@ export default function GalleryPage() {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-20 bg-muted/30 relative overflow-hidden">
-        <div className="absolute inset-0 geometric-bg opacity-30"></div>
+      {/* İstatistikler */}
+      <section className="py-20 bg-muted\/30 relative overflow-hidden">
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 animate-fade-in-up">
-              <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                Başarı İstatistikleri
-              </span>
-            </h2>
-            <p className="text-lg text-muted-foreground animate-fade-in-up animate-delay-100">
-              Rakamlarla projelerimizin başarısı
-            </p>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-extrabold">Başarı İstatistikleri</h2>
+            <p className="mt-3 text-white/70">Rakamlarla projelerimiz</p>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
-              { number: "500+", label: "Tamamlanan Proje", icon: Award },
-              { number: "50+", label: "Şehir", icon: MapPin },
-              { number: "15", label: "Yıl Deneyim", icon: Calendar },
-              { number: "99.9%", label: "Müşteri Memnuniyeti", icon: Zap },
-            ].map((stat, index) => (
-              <div
-                key={index}
-                className={`text-center animate-fade-in-up group`}
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                <div className="w-16 h-16 bg-gradient-to-br from-accent/20 to-primary/20 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:animate-glow">
-                  <stat.icon className="w-8 h-8 text-accent group-hover:animate-float" />
+              { number: "350+", label: "Tamamlanan Proje", icon: Award },
+              { number: "20+", label: "Şehir", icon: MapPin },
+              { number: "10+", label: "Yıl Deneyim", icon: Calendar },
+              { number: "%98", label: "Müşteri Memnuniyeti", icon: Zap },
+            ].map((s, i) => (
+              <div key={i} className="text-center">
+                <div className="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-xl bg-white/6">
+                  <s.icon className="h-8 w-8 text-accent" />
                 </div>
-                <div className="text-3xl font-bold text-foreground mb-2 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                  {stat.number}
-                </div>
-                <div className="text-sm text-muted-foreground font-medium">{stat.label}</div>
+                <div className="text-3xl font-bold">{s.number}</div>
+                <div className="text-sm text-white/70">{s.label}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-primary via-accent to-primary text-primary-foreground relative overflow-hidden">
-        <div className="absolute inset-0 geometric-bg opacity-20"></div>
-        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 animate-fade-in-up text-balance">
-            Siz de Projemizin Bir Parçası Olun
-          </h2>
-          <p className="text-xl text-primary-foreground/90 mb-8 animate-fade-in-up animate-delay-100 text-pretty">
-            Hayalinizdeki projeyi birlikte gerçekleştirelim
+      {/* CTA */}
+      <section className="py-16 bg-muted\/30">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h3 className="text-2xl md:text-3xl font-extrabold">Hayalinizdeki projeyi birlikte gerçekleştirelim</h3>
+          <p className="text-white/80 mt-3 max-w-2xl mx-auto">
+            Keşif randevusu oluşturun, yerinde analiz ile en doğru çözümü planlayalım.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up animate-delay-200">
-            <Button
-              asChild
-              size="lg"
-              variant="secondary"
-              className="bg-background text-foreground hover:bg-background/90 transition-all duration-300 transform hover:scale-105"
-            >
-              <Link href="/iletisim">
-                <Zap className="w-5 h-5 mr-2" />
-                Projenizi Başlatalım
-              </Link>
+          <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
+            <Button asChild className="bg-white text-black hover:bg-gray-100">
+              <Link href="/iletisim">Projenizi Başlatalım</Link>
             </Button>
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-              className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary transition-all duration-300 bg-transparent"
-            >
-              <Link href="/urunler">Ürünleri İncele</Link>
+            <Button asChild variant="outline" className="border-white text-white hover:bg-white hover:text-black">
+              <Link href="/hizmetler">Hizmetlerimiz</Link>
             </Button>
           </div>
         </div>
       </section>
+
+      {/* LIGHTBOX */}
+      {activeIndex != null && (
+        <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center">
+          <button
+            aria-label="Kapat"
+            className="absolute right-4 top-4 rounded-md border border-white/20 p-2 text-white/90 "
+            onClick={closeLightbox}
+          >
+            <X className="h-5 w-5" />
+          </button>
+          <button
+            aria-label="Önceki"
+            className="absolute left-3 md:left-6 rounded-md border border-white/20 p-2 text-white/90 "
+            onClick={prev}
+          >
+            <ChevronLeft className="h-6 w-6" />
+          </button>
+          <button
+            aria-label="Sonraki"
+            className="absolute right-3 md:right-6 rounded-md border border-white/20 p-2 text-white/90 "
+            onClick={next}
+          >
+            <ChevronRight className="h-6 w-6" />
+          </button>
+
+          <div className="mx-4 w-full max-w-5xl">
+            <div className="relative aspect-[16/9] rounded-xl overflow-hidden border border-white/10 bg-white/5">
+              <Image
+                src={items[activeIndex].image}
+                alt={items[activeIndex].title}
+                fill
+                sizes="100vw"
+                className="object-contain"
+                priority
+              />
+            </div>
+            <div className="mt-4 flex items-center justify-between text-white/80">
+              <div className="text-sm">
+                <div className="font-semibold">{items[activeIndex].title}</div>
+                <div className="text-white/60">{items[activeIndex].location} • {items[activeIndex].date}</div>
+              </div>
+              <div className="flex items-center gap-2">
+                <Badge variant="secondary" className="bg-accent/80 text-white border-0">
+                  {items[activeIndex].category}
+                </Badge>
+                <a
+                  href={items[activeIndex].image}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1 text-sm text-white/80 hover:text-white"
+                >
+                  Orijinali Aç <ExternalLink className="h-4 w-4" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
-  )
+  );
 }

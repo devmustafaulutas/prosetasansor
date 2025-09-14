@@ -104,10 +104,10 @@ export default function Header() {
 
                     {/* Desktop nav */}
                     <nav className="hidden md:flex items-center gap-6">
+                        <ActiveLink href="/">Ana Sayfa</ActiveLink>
                         <ActiveLink href="/hakkimizda">Hakkımızda</ActiveLink>
                         <ActiveLink href="/hizmetlerimiz">Hizmetlerimiz</ActiveLink>
-                        <ActiveLink href="/projeler">Projeler</ActiveLink>
-                        <ActiveLink href="/belgeler">Belgeler</ActiveLink>
+                        <ActiveLink href="/galeri">Galeri</ActiveLink>
                         <ActiveLink href="/iletisim">İletişim</ActiveLink>
                     </nav>
 
@@ -182,7 +182,7 @@ export default function Header() {
                                 <MobileLink href="/hakkimizda" onClick={() => setOpen(false)}>Hakkımızda</MobileLink>
                                 <MobileLink href="/hizmetlerimiz" onClick={() => setOpen(false)}>Hizmetlerimiz</MobileLink>
                                 <MobileLink href="/projeler" onClick={() => setOpen(false)}>Projeler</MobileLink>
-                                <MobileLink href="/belgeler" onClick={() => setOpen(false)}>Belgeler</MobileLink>
+                                <MobileLink href="/galeri" onClick={() => setOpen(false)}>Galeri</MobileLink>
                                 <MobileLink href="/iletisim" onClick={() => setOpen(false)}>İletişim</MobileLink>
                             </div>
                             <div className="my-6 h-px bg-white/10" />

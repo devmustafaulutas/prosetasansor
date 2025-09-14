@@ -107,21 +107,17 @@ const SERVICES: Service[] = [
 /* ── PAGE ─────────────────────────────────────────────────────────────── */
 export default function ServicesPage() {
   return (
-    <div className="min-h-screen bg-muted/30 text-foreground">
+    <div className="min-h-screen bg-muted\/30 text-foreground">
       <WhatsAppButton />
 
-      <PageHeader title="Hizmetlerimiz" bgImage="/asansor-1.jpg" objectPosition="50% 45%" />
-
+      <PageHeader
+        title="Hizmetlerimiz"
+        bgImage="/asansor-1.jpg"
+        objectPosition="50% 45%"
+      />
       {/* HİZMET KARTLARI */}
-      <section className="py-16 bg-muted/30">
+      <section className="py-16 bg-muted\/30">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-extrabold">Hizmetlerimiz</h2>
-            <p className="mt-3 text-muted-foreground">
-              Projelendirme, <b>montaj</b>, <b>modernizasyon</b> ve <b>bakım-onarım</b> süreçlerinde yanınızdayız.
-            </p>
-          </div>
-
           <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {SERVICES.map((s) => (
               <Card
@@ -168,7 +164,7 @@ export default function ServicesPage() {
       </section>
 
       {/* SÜREÇ – zaman çizgisi */}
-      <section className="py-16 bg-muted/30">
+      <section className="py-16 bg-muted\/30">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto">
             <h3 className="text-2xl md:text-3xl font-extrabold">Süreç Nasıl İşliyor?</h3>
@@ -200,7 +196,7 @@ export default function ServicesPage() {
       </section>
 
       {/* ALT CTA */}
-      <section className="relative py-16 bg-muted/30">
+      <section className="relative py-16 bg-muted\/30">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h3 className="text-2xl md:text-3xl font-extrabold">Projeniz için doğru çözümü birlikte planlayalım</h3>
           <p className="text-muted-foreground mt-3 max-w-2xl mx-auto">
