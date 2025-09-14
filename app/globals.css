@@ -477,14 +477,16 @@ textarea.tech-border:-webkit-autofill:focus {
   caret-color: #fff;
   transition: background-color 9999s ease-in-out 0s;
 }
-.header-wrap{
-  position: sticky; top: 0; z-index: 2000;
+/* Fixed header davranışı + body padding */
+body.has-fixed-header { padding-top: var(--header-h); }
+
+.header-fixed {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 2000;
   transform: translate3d(0,0,0);
   transition: transform .22s ease, background-color .25s ease, backdrop-filter .25s ease, border-color .25s ease;
   will-change: transform, backdrop-filter, background-color;
 }
-.header-show { transform: translate3d(0,0,0); }
-.header-hide { transform: translate3d(0,-100%,0); pointer-events: none; }
+.header-fixed--hidden { transform: translate3d(0,-100%,0); pointer-events: none; }
 
 .header-blur{
   backdrop-filter: blur(6px);

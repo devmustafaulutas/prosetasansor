@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { FaInstagram, FaWhatsapp, FaLinkedinIn, FaEnvelope } from "react-icons/fa6"
+import { FaInstagram, FaWhatsapp, FaEnvelope } from "react-icons/fa6"
 
 const socials = [
-  { href: 'https://www.instagram.com/prosetelevator/', label: 'Instagram', node: <FaInstagram className="text-[18px]" aria-hidden="true" /> },
+  { href: 'https://www.instagram.com/prosetelevator?igsh=bWhwcGF2ZTlpa2hw', label: 'Instagram', node: <FaInstagram className="text-[18px]" aria-hidden="true" /> },
   { href: 'https://wa.me/905532776781',                label: 'WhatsApp',  node: <FaWhatsapp  className="text-[18px]" aria-hidden="true" /> },
-  { href: '#',                                         label: 'LinkedIn',  node: <FaLinkedinIn  className="text-[18px]" aria-hidden="true" /> },
   { href: 'mailto:prosetasansor@gmail.com',            label: 'E-posta',   node: <FaEnvelope      className="text-[18px]" aria-hidden="true" /> },
 ];
 
