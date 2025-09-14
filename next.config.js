@@ -1,8 +1,7 @@
-/** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
   images: { unoptimized: true },
-  assetPrefix: '/wp-content/uploads/static-bridge', 
-  trailingSlash: true, 
+  assetPrefix: '/wp-content/uploads/static-bridge',
+  trailingSlash: true,
 };
 module.exports = nextConfig;

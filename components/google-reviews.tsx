@@ -77,7 +77,6 @@ export function GoogleReviews() {
   return (
     <section className="py-16 bg-muted/30 text-white">
       <div className="container mx-auto px-4">
-        {/* Başlık + genel puan */}
         <div className="text-center mb-10">
           <h2 className="text-3xl font-extrabold mb-3">Müşteri Yorumları</h2>
 
@@ -94,12 +93,10 @@ export function GoogleReviews() {
             <span className="font-semibold">{avg.toFixed(1)}/5</span>
             <span className="text-white/60">({REVIEWS.length} değerlendirme)</span>
 
-            {/* Harici görsel + fallback */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="https://www.gstatic.com/images/branding/product/1x/gsa_64dp.png"
               alt="Google"
-              className="w-5 h-5 ml-1 hidden"        // varsayılan gizle; onLoad’la açıyoruz
+              className="w-5 h-5 ml-1 hidden"   
               onLoad={(e) => (e.currentTarget.classList.remove("hidden"))}
               onError={(e) => {
                 e.currentTarget.style.display = "none";
@@ -107,7 +104,6 @@ export function GoogleReviews() {
                 if (fallback) fallback.style.display = "inline-block";
               }}
             />
-            {/* Fallback inline SVG */}
             <span style={{ display: "none" }}>
               <GoogleG className="w-5 h-5 ml-1" />
             </span>
@@ -115,7 +111,6 @@ export function GoogleReviews() {
 
         </div>
 
-        {/* Yorum kartları */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {REVIEWS.map((r, idx) => (
             <Card
@@ -165,7 +160,6 @@ export function GoogleReviews() {
           ))}
         </div>
 
-        {/* CTA’lar */}
         <div className="flex flex-wrap gap-4 justify-center mt-10">
           <a
             href={GOOGLE_SEARCH_URL}
@@ -177,7 +171,6 @@ export function GoogleReviews() {
           </a>
         </div>
 
-        {/* Structured data (SEO) */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

@@ -4,6 +4,8 @@ import React from 'react';
 import Link from 'next/link';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import asansor from '@/public/asansor-1.jpg'
+import Image from 'next/image';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -48,10 +50,9 @@ export default function Hero() {
         <header
             className="relative isolate w-full overflow-hidden overlap-header
             min-h-[calc(100svh+var(--header-h)-57px)] flex items-center ">
-            {/* FULL-BLEED GÖRSEL */}
-            <img
+            <Image
                 ref={bgRef}
-                src="/asansor-1.jpg"
+                src={asansor}
                 alt=""
                 aria-hidden="true"
                 className="absolute inset-0 -z-20 h-full w-full object-cover object-[45%_40%]"
@@ -61,7 +62,6 @@ export default function Hero() {
                 onLoad={onBgLoad}
             />
 
-            {/* KARARTMA + VİGNETTE */}
             <div
                 className="pointer-events-none absolute inset-0 -z-10"
                 style={{
@@ -73,7 +73,6 @@ export default function Hero() {
                 }}
             />
 
-            {/* BRAND HALO */}
             <div
                 ref={haloRef}
                 aria-hidden="true"
@@ -81,7 +80,6 @@ export default function Hero() {
                 style={{ background: 'radial-gradient(closest-side, rgba(225,29,47,.45), transparent 70%)' }}
             />
 
-            {/* İÇERİK */}
             <div className="mx-auto max-w-[1200px] px-4 h-full flex items-center pb-14">
                 <div ref={contentRef} className="w-full text-white text-glow-hero text-center max-w-[980px] lg:max-w-[1200px] mx-auto">                    <div className="mb-4" data-stagger>
                     <span className="brand-eyebrow">PROSET ASANSÖR</span>
@@ -100,7 +98,6 @@ export default function Hero() {
                         TS EN 81-20/50 uyumlu; güvenlik, konfor ve enerji verimliliği odaklı.
                     </p>
 
-                    {/* BUTONLAR */}
                     <div className="mt-7 flex flex-wrap gap-3" data-stagger>
                         <Link
                             href="/hizmetler"
@@ -132,7 +129,6 @@ export default function Hero() {
                         </Link>
                     </div>
 
-                    {/* BULLETLAR */}
                     <div className="mt-6 grid gap-x-8 gap-y-2 sm:grid-cols-2" data-stagger>
                         {[
                             'EN 81-20/50 uygun kurulum ve test',

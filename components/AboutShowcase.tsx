@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Shield, Sparkles, Wrench, ArrowRight } from "lucide-react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import elevator from "@/public/elevator.jpg"
+import elevatorbutton from "@/public/elevator-button.jpg"
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -69,7 +71,7 @@ export default function AboutShowcase() {
               className="about-anim relative aspect-[16/10] w-full overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-xl"
             >
               <Image
-                src="/elevator.jpg"
+                src={elevator}
                 alt="Proset Asansör — modern asansör kabini"
                 fill
                 className="object-cover"
@@ -84,7 +86,7 @@ export default function AboutShowcase() {
             >
               <div className="relative aspect-[4/3] w-full">
                 <Image
-                  src="/elevator-button.jpg"
+                  src={elevatorbutton}
                   alt="Asansör çağrı butonu — detay"
                   fill
                   className="object-cover"

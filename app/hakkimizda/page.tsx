@@ -3,6 +3,8 @@
 import PageHeader from "@/components/PageHeader";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import elevator from "@/public/elevator.jpg";
+import hero from "@/public/asansor-1.jpg";
 import Link from "next/link";
 import {
   Shield,
@@ -25,7 +27,7 @@ export default function AboutPage() {
       {/* ÜST BAŞLIK (Hero ile aynı karartma/vignette stili) */}
       <PageHeader
         title="Hakkımızda"
-        bgImage="/asansor-1.jpg"
+        bgImage={hero.src}
         objectPosition="50% 45%"
       />
 
@@ -86,7 +88,7 @@ export default function AboutPage() {
               {/* Küçük görsel bloğu */}
               <div
                 className="w-full h-64 md:h-80 rounded-xl border border-white/10 bg-white/5 bg-center bg-cover"
-                style={{ backgroundImage: "url('/elevator.jpg')" }}
+                style={{ backgroundImage: `url(${elevator.src})` }}
               />
               <p className="text-sm text-white/70">
                 “Her tip asansörün projelendirilmesinden üretimine, montajından

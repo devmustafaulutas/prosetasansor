@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { FaInstagram, FaWhatsapp, FaEnvelope } from "react-icons/fa6";
 import { RxCross2 } from "react-icons/rx";
+import logo from '@/public/logo.png';
 
 function ActiveLink({ href, children, onClick }: {
   href: string; children: React.ReactNode; onClick?: () => void;
@@ -154,7 +155,7 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3">
             <Image
-              src="/logo.png" alt="Proset Asansör" width={180} height={52} priority
+              src={logo} alt="Proset Asansör" width={180} height={52} priority
               className="h-12 sm:h-14 w-auto object-contain [image-rendering:-webkit-optimize-contrast]"
             />
             <span className="hidden sm:inline font-semibold text-white">Proset Asansör</span>
@@ -214,7 +215,7 @@ export default function Header() {
                             px-5 flex flex-col">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Image src="/logo.png" alt="Proset Asansör" width={120} height={36}
+                <Image src={logo} alt="Proset Asansör" width={120} height={36}
                   className="h-8 w-auto [filter:drop-shadow(0_0_10px_rgba(255,255,255,.06))] [filter:brightness(1.05)]" />
                 <span className="font-semibold text-white">Proset Asansör</span>
               </div>

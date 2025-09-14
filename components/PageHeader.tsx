@@ -12,12 +12,9 @@ type Crumb = { label: string; href?: string };
 type Props = {
   title: string;
   subtitle?: string;
-  /** Public URL of the background image */
   bgImage: string;
-  /** same as Hero: object position of the bg */
   objectPosition?: string;
   crumbs?: Crumb[];
-  /** show brand halo (Hero’daki kırmızı glow) */
   showHalo?: boolean;
 };
 

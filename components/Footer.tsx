@@ -73,7 +73,6 @@ export default function Footer() {
             </ul>
           </nav>
 
-          {/* 3) İletişim */}
           <section className="p-6 md:py-0 md:basis-1/4 md:px-6">
             <h4 className="text-lg font-semibold text-[var(--brand)] mb-4 tracking-tight">İletişim</h4>
             <address className="not-italic">
@@ -98,7 +97,6 @@ export default function Footer() {
             </address>
           </section>
 
-          {/* 4) Konum */}
           <section className="p-6 md:py-0 md:basis-1/4 md:px-6">
             <h4 className="text-lg font-semibold text-[var(--brand)] mb-4 tracking-tight">Konum</h4>
             <div className="rounded-2xl overflow-hidden border border-neutral-800 shadow-[0_10px_28px_rgba(0,0,0,.35)] bg-[#111318]">

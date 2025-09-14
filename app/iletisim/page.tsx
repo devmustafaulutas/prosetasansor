@@ -8,6 +8,9 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/components/ui/use-toast';
+import hero from "@/public/asansor-1.jpg";
+
+
 import {
   Phone,
   Mail,
@@ -132,7 +135,7 @@ export default function ContactPage() {
         const body = buildSummary({ mode, topics, form });
 
         // Panoya kopyala (izin olmazsa sorun değil)
-        try { await navigator.clipboard?.writeText(body); } catch {}
+        try { await navigator.clipboard?.writeText(body); } catch { }
 
         // Mail uygulamasını aç
         const url = buildMailto({ subject, body });
@@ -195,7 +198,11 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen">
       <WhatsAppButton />
-      <PageHeader title="İletişim" bgImage="/asansor-1.jpg" objectPosition="50% 45%" />
+      <PageHeader
+        title="İletişim"
+        bgImage={hero.src}
+        objectPosition="50% 45%"
+      />
 
       {/* Üst vaat pill'leri */}
       <section className="bg-muted/30">
@@ -331,11 +338,10 @@ export default function ContactPage() {
                             type="button"
                             onClick={() => toggleTopic(t)}
                             aria-pressed={active}
-                            className={`rounded-full border px-3 py-1 text-sm transition ${
-                              active
-                                ? 'border-red-500/50 bg-red-500/20 text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,.05)]'
-                                : 'border-white/10 bg-white/5 text-white/80 hover:bg-white/10 hover:border-white/20'
-                            }`}
+                            className={`rounded-full border px-3 py-1 text-sm transition ${active
+                              ? 'border-red-500/50 bg-red-500/20 text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,.05)]'
+                              : 'border-white/10 bg-white/5 text-white/80 hover:bg-white/10 hover:border-white/20'
+                              }`}
                           >
                             {t}
                           </button>

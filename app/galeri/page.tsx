@@ -9,17 +9,24 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
-  ImageIcon,
-  Play,
-  ExternalLink,
-  Calendar,
-  MapPin,
-  Award,
-  Zap,
-  X,
-  ChevronLeft,
-  ChevronRight,
+  ImageIcon, Play, ExternalLink, Calendar, MapPin, Award, Zap, X,
+  ChevronLeft, ChevronRight,
 } from "lucide-react";
+import hero from "@/public/asansor-1.jpg";
+
+import img_c from "@/public/c.jpeg";
+import img_aa from "@/public/aa.jpeg";
+import img_bbb from "@/public/bbb.jpeg";
+import img_bb from "@/public/bb.jpeg";
+import img_e from "@/public/e.jpeg";
+import img_ee from "@/public/ee.jpeg";
+import img_aaa from "@/public/aaa.jpeg";
+import img_cccc from "@/public/cccc.jpeg";
+import img_ccccc from "@/public/ccccc.jpeg";
+import img_dddd from "@/public/dddd.jpeg";
+import img_g from "@/public/g.jpeg";
+import img_gg from "@/public/gg.jpeg";
+import img_gggg from "@/public/gggg.jpeg";
 
 type Item = {
   id: number;
@@ -37,35 +44,31 @@ type Item = {
   | "Sertifika";
   location: string;
   date: string;
-  image: string;
+  image: string; // string kalabilir; .src atıyoruz
   description: string;
   features: string[];
   type?: "image" | "video";
 };
 
 const ALL_ITEMS: Item[] = [
-
-  { // kumanda/ekipman
+  {
     id: 5,
     title: "Kontrol paneli",
     category: "Buton & Kumanda",
     location: "Bursa",
     date: "2024",
-    image: "/c.jpeg",
+    image: img_c.src,
     description: "Kabin üstü acil durdurma ve kontrol arayüzü.",
     features: ["Acil Stop", "Standart Uyumu"],
   },
-
-  // — montaj / kuyu / ray
   {
     id: 6,
     title: "Kuyu montajı",
     category: "Montaj",
     location: "Ankara",
     date: "2024",
-    image: "/aa.jpeg",
-    description:
-      "TS EN 81-20/50’e uygun kuyu montajı ve şaft içi kablolama.",
+    image: img_aa.src,
+    description: "TS EN 81-20/50’e uygun kuyu montajı ve şaft içi kablolama.",
     features: ["EN 81-20/50", "Şaft Düzeni", "Test ve Devreye Alma"],
   },
   {
@@ -74,7 +77,7 @@ const ALL_ITEMS: Item[] = [
     category: "Kuyu / Ray",
     location: "İstanbul",
     date: "2024",
-    image: "/bbb.jpeg",
+    image: img_bbb.src,
     description: "Ray doğrultma ve ankraj uygulamaları.",
     features: ["Ray Doğrultma", "Ankraj", "Hassas Ölçüm"],
   },
@@ -84,7 +87,7 @@ const ALL_ITEMS: Item[] = [
     category: "Kuyu / Ray",
     location: "Ankara",
     date: "2024",
-    image: "/bb.jpeg",
+    image: img_bb.src,
     description: "Kuyu üstü bağlantı ve sınır anahtarı yerleşimi.",
     features: ["Sınır Anahtarı", "Güvenlik"],
   },
@@ -94,7 +97,7 @@ const ALL_ITEMS: Item[] = [
     category: "Kabin & Kapı",
     location: "Kocaeli",
     date: "2024",
-    image: "/e.jpeg",
+    image: img_e.src,
     description: "Kabin kapısı takoz ve merkezleme işlemleri.",
     features: ["Merkezleme", "Sessiz Çalışma"],
   },
@@ -104,7 +107,7 @@ const ALL_ITEMS: Item[] = [
     category: "Kuyu / Ray",
     location: "İzmir",
     date: "2024",
-    image: "/ee.jpeg",
+    image: img_ee.src,
     description: "Kılavuz raya ait bağlantı bileşenleri.",
     features: ["Kılavuz Ray", "Bağlantı Elemanları"],
   },
@@ -114,7 +117,7 @@ const ALL_ITEMS: Item[] = [
     category: "Kabin & Kapı",
     location: "Ankara",
     date: "2024",
-    image: "/aaa.jpeg",
+    image: img_aaa.src,
     description: "Tam boy kapı ve eşik hizalama.",
     features: ["Hassas Hizalama", "Gürültüsüz Açma-Kapama"],
   },
@@ -124,7 +127,7 @@ const ALL_ITEMS: Item[] = [
     category: "Kabin & Kapı",
     location: "İstanbul",
     date: "2024",
-    image: "/cccc.jpeg",
+    image: img_cccc.src,
     description: "Kapı kasası montajı ve eşik bağlantısı.",
     features: ["Kapı Kasası", "Eşik"],
   },
@@ -134,7 +137,7 @@ const ALL_ITEMS: Item[] = [
     category: "Kuyu / Ray",
     location: "İstanbul",
     date: "2024",
-    image: "/ccccc.jpeg",
+    image: img_ccccc.src,
     description: "Kuyu dibi aksesuarlarının yerleşimi.",
     features: ["Siperlik", "Stopper"],
   },
@@ -144,19 +147,17 @@ const ALL_ITEMS: Item[] = [
     category: "Montaj",
     location: "Ankara",
     date: "2024",
-    image: "/dddd.jpeg",
+    image: img_dddd.src,
     description: "Kabin üstü kablolama ve güvenlik ekipmanları.",
     features: ["Kablo Yönetimi", "Güvenlik"],
   },
-
-  // — pano / makine / elektrik
   {
     id: 20,
     title: "Makine dairesi — pano",
     category: "Bakım",
     location: "Kocaeli",
     date: "2024",
-    image: "/g.jpeg",
+    image: img_g.src,
     description: "Kontrol panosu ve kablo yönetimi.",
     features: ["Pano", "Kablo Düzeni"],
   },
@@ -166,7 +167,7 @@ const ALL_ITEMS: Item[] = [
     category: "Bakım",
     location: "İzmir",
     date: "2024",
-    image: "/gg.jpeg",
+    image: img_gg.src,
     description: "Arıza tespiti ve yerinde onarım.",
     features: ["Arıza Tespiti", "Hızlı Müdahale"],
   },
@@ -176,7 +177,7 @@ const ALL_ITEMS: Item[] = [
     category: "Bakım",
     location: "Ankara",
     date: "2024",
-    image: "/gggg.jpeg",
+    image: img_gggg.src,
     description: "Saha bağlantı ve test noktaları.",
     features: ["Bağlantı", "Test"],
   },
@@ -232,15 +233,18 @@ export default function GalleryPage() {
     <div className="min-h-screen">
       <WhatsAppButton />
 
-      <PageHeader title="Galeri" subtitle="Projelerimizden kareler" bgImage="/asansor-1.jpg" objectPosition="50% 45%" />
-      {/* Grid */}
+      <PageHeader
+        title="Galeri"
+        bgImage={hero.src}
+        objectPosition="50% 45%"
+      />    
       <section className="py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {items.map((item, index) => (
               <Card
                 key={item.id}
-                className="group overflow-hidden border-white/10 bg-white/5 transition-colors" // <- hover:bg... yok
+                className="group overflow-hidden border-white/10 bg-white/5 transition-colors" 
               >
                 <div
                   className="relative aspect-video overflow-hidden rounded-t-lg cursor-pointer"
@@ -254,7 +258,6 @@ export default function GalleryPage() {
                     sizes="(max-width:768px) 100vw, 33vw"
                     className="object-cover transition-transform duration-500 group-hover:scale-[1.03] will-change-transform [transform:translateZ(0)]"
                   />
-                  {/* overlay KALDIRILDI */}
                   {item.type === "video" && (
                     <div className="absolute top-3 right-3 rounded-full bg-black/60 px-2 py-1 text-xs text-white flex items-center gap-1">
                       <Play className="w-3 h-3" />
@@ -297,7 +300,6 @@ export default function GalleryPage() {
         </div>
       </section>
 
-      {/* İstatistikler */}
       <section className="py-20 bg-muted\/30 relative overflow-hidden">
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -324,7 +326,6 @@ export default function GalleryPage() {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="py-16 bg-muted\/30">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h3 className="text-2xl md:text-3xl font-extrabold">Hayalinizdeki projeyi birlikte gerçekleştirelim</h3>
@@ -342,7 +343,6 @@ export default function GalleryPage() {
         </div>
       </section>
 
-      {/* LIGHTBOX */}
       {activeIndex != null && (
         <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center">
           <button
