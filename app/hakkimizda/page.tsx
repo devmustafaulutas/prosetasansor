@@ -185,7 +185,7 @@ export default function AboutPage() {
 
           <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-3 lg:gap-4 max-w-4xl mx-auto">
             {[
-              "İnsan Asansörleri",
+              "Yolcu Asansörleri",
               "Panoramik Asansörler",
               "Yük Asansörleri",
               "Hidrolik Asansörler",

@@ -1,5 +1,15 @@
 import { z } from "zod";
 
+const ModeEnum = z.enum(["Teklif", "Servis", "Genel"]);
+const TopicEnum = z.enum([
+  "Montaj",
+  "Modernizasyon",
+  "Bakım",
+  "Engelli Platformu",
+  "Yürüyen Merdiven",
+  "Projelendirme",
+]);
+
 export const contactSchema = z.object({
   name: z.string().min(3, "Ad soyad en az 3 karakter olmalı").max(80),
   email: z.string().email("Geçerli bir e-posta girin").max(120),
@@ -9,9 +19,11 @@ export const contactSchema = z.object({
     .max(20)
     .transform((v) => v.replace(/[^\d+]/g, ""))
     .refine((v) => /^\+?\d{10,15}$/.test(v), "Telefon biçimi geçersiz"),
-  message: z.string().min(10, "Mesaj en az 10 karakter olmalı").max(2000),
-  website: z.string().max(0).optional(),
+  message: z.string().min(10, "Mesaj en az 10 karakter olmalı").max(1000), 
+  website: z.string().max(0).optional(), 
   cfToken: z.string().optional(),
+  mode: ModeEnum,
+  topics: z.array(TopicEnum).max(6).default([]),
 });
 
 export type ContactInput = z.infer<typeof contactSchema>;

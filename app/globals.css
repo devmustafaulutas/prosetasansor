@@ -456,3 +456,38 @@ html, body { overflow-x: hidden; }
   opacity: .95;
   text-shadow: 0 6px 28px rgba(225,29,47,.35);
 }
+input.tech-border,
+textarea.tech-border { background-color: transparent !important; }
+
+input.tech-border:focus,
+textarea.tech-border:focus,
+input.tech-border:focus-visible,
+textarea.tech-border:focus-visible { background-color: transparent !important; }
+
+/* Chrome/Safari autofill beyazı */
+input.tech-border:-webkit-autofill,
+input.tech-border:-webkit-autofill:hover,
+input.tech-border:-webkit-autofill:focus,
+textarea.tech-border:-webkit-autofill,
+textarea.tech-border:-webkit-autofill:hover,
+textarea.tech-border:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+  box-shadow: 0 0 0 1000px transparent inset !important;
+  -webkit-text-fill-color: #fff !important;
+  caret-color: #fff;
+  transition: background-color 9999s ease-in-out 0s;
+}
+.header-wrap{
+  position: sticky; top: 0; z-index: 2000;
+  transform: translate3d(0,0,0);
+  transition: transform .22s ease, background-color .25s ease, backdrop-filter .25s ease, border-color .25s ease;
+  will-change: transform, backdrop-filter, background-color;
+}
+.header-show { transform: translate3d(0,0,0); }
+.header-hide { transform: translate3d(0,-100%,0); pointer-events: none; }
+
+.header-blur{
+  backdrop-filter: blur(6px);
+  background: rgba(0,0,0,.55);
+  border-bottom-color: rgba(255,255,255,.08);
+}
