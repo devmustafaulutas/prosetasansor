@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import * as React from 'react';
 import { FaInstagram, FaWhatsapp, FaEnvelope } from "react-icons/fa6"
 
@@ -61,13 +62,13 @@ export default function Footer() {
                 ['İletişim', '/iletisim'],
               ].map(([t, href]) => (
                 <li key={href}>
-                  <a
+                  <Link
                     href={href}
                     className="block py-1 rounded-sm text-neutral-300 transition-colors hover:text-white
                                focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand)]"
                   >
                     {t}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

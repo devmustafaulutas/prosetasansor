@@ -103,7 +103,7 @@ export default function Hero() {
                     {/* BUTONLAR */}
                     <div className="mt-7 flex flex-wrap gap-3" data-stagger>
                         <Link
-                            href="/hizmetler"
+                            href="/hizmetlerimiz"
                             className="btn btn-cta group relative overflow-hidden will-change-transform
                          hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand)]
                          shadow-[0_8px_24px_rgba(225,29,47,.28)] hover:shadow-[0_16px_48px_rgba(225,29,47,.45)]"
