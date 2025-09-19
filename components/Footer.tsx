@@ -21,7 +21,7 @@ export default function Footer() {
       <div className="mx-auto max-w-[1200px] px-4 py-14">
         <div className="flex flex-col md:flex-row gap-y-8 md:gap-x-12">
           <section className="p-6 md:py-0 md:basis-1/4 md:px-6 md:first:pl-0 md:last:pr-0">
-            <h4 className="text-lg font-semibold text-[var(--brand)] mb-4 tracking-tight">Proset Asansör</h4>
+            <h4 className="text-lg font-semibold text-[var(--brand)] mb-4 tracking-tight">Proset Elektronik ve Asansör Sistemleri</h4>
             <p className="text-sm text-neutral-300 leading-relaxed">
               Montaj, modernizasyon ve periyodik bakımda kurumsal çözümler. TS EN 81-20/50 uyumlu, güvenli ve enerji verimli sistemler.
             </p>
@@ -111,7 +111,7 @@ export default function Footer() {
         <div className="relative p-3 mt-12">
           <div className="absolute left-1/2 -top-px h-px w-screen -translate-x-1/2 bg-neutral-800" />
           <div className="pt-6 flex flex-col md:flex-row items-center justify-between gap-3 text-sm text-neutral-400">
-            <p>© {new Date().getFullYear()} Proset Asansör — “Her kata güven, her kata kalite.”</p>
+            <p>© {new Date().getFullYear()}Proset elektronik ve asansör sistemleri — “Her kata güven, her kata kalite.”</p>
             <p>TS EN 81-20/50 uyumlu kurulum • 7/24 servis • Ankara</p>
           </div>
         </div>

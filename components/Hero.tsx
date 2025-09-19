@@ -81,14 +81,28 @@ export default function Hero() {
             />
 
             <div className="mx-auto max-w-[1200px] px-4 h-full flex items-center pb-14">
-                <div ref={contentRef} className="w-full text-white text-glow-hero text-center max-w-[980px] lg:max-w-[1200px] mx-auto">                    <div className="mb-4" data-stagger>
-                    <span className="brand-eyebrow">PROSET ASANSÖR</span>
-                </div>
-                    <h1 className="hero-title relative inline-block md:block tracking-tight md:whitespace-nowrap mx-auto" data-stagger>                        Her kata <span className="brand-grad">güven</span>, her kata <span className="brand-grad">kalite</span>
+                <div ref={contentRef} className="w-full text-white text-glow-hero text-center max-w-[980px] lg:max-w-[1200px] mx-auto">
+                    <div className="mb-4" data-stagger>
+                        <span className="brand-eyebrow">PROSET ELEKTRONİK VE ASANSÖR SİSTEMLERİ</span>
+                    </div>
+                    <h1
+                        className="hero-title relative inline-block md:block 
+                        tracking-tight leading-tight 
+                        text-[clamp(1.8rem,5vw,3.5rem)] 
+                        max-w-[1000px] mx-auto text-center px-4"
+                                    data-stagger
+                                >
+                        MODERN GÜVENLİ ve
+                        KALİTELİ YÜKSELİŞİN ADRESİ
+                        <span className="brand-grad block">PROSET</span>
+
                         <span
                             aria-hidden="true"
                             className="pointer-events-none absolute inset-0 -z-10 blur-2xl opacity-25"
-                            style={{ background: 'radial-gradient(60% 60% at 50% 55%, rgba(225,29,47,.35), transparent)' }}
+                            style={{
+                                background:
+                                    'radial-gradient(60% 60% at 50% 55%, rgba(225,29,47,.35), transparent)',
+                            }}
                         />
                     </h1>
 
@@ -114,18 +128,20 @@ export default function Hero() {
                                transition-all duration-700 ease-out
                                group-hover:opacity-70 group-hover:translate-x-[180%]" />
                         </Link>
-
                         <Link
                             href="/iletisim"
-                            className="btn btn-ghost group relative overflow-hidden will-change-transform
-                         hover:-translate-y-0.5 hover:border-[var(--brand)]/60
-                         hover:shadow-[0_8px_24px_rgba(225,29,47,.22)]
-                         focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand)]"
+                            className="btn btn-cta group relative overflow-hidden will-change-transform
+                         hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand)]
+                         shadow-[0_8px_24px_rgba(225,29,47,.28)] hover:shadow-[0_16px_48px_rgba(225,29,47,.45)]"
                         >
                             Teklif Al
                             <span className="pointer-events-none absolute inset-0 rounded-full opacity-0
                                transition-opacity duration-200 group-hover:opacity-100
-                               [box-shadow:inset_0_0_18px_rgba(225,29,47,.22)]" />
+                               [box-shadow:inset_0_0_24px_rgba(225,29,47,.38)]" />
+                            <span className="pointer-events-none absolute -inset-y-10 -left-10 w-10 rotate-12
+                               bg-white/40 blur-xl opacity-0 transform
+                               transition-all duration-700 ease-out
+                               group-hover:opacity-70 group-hover:translate-x-[180%]" />
                         </Link>
                     </div>
 
@@ -134,6 +150,7 @@ export default function Hero() {
                             'EN 81-20/50 uygun kurulum ve test',
                             'Enerji verimli sürücüler ve LED',
                             'Ankara ve çevresi hızlı servis',
+                            'Türkiye geneli hizmet',
                             'Şeffaf raporlama ve dokümantasyon'
                         ].map((t, i) => <span key={i} className="bullet" style={{ color: 'rgba(255,255,255,.85)' }}>{t}</span>)}
                     </div>

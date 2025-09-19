@@ -36,13 +36,13 @@ export default function AboutPage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
             <div>
-              <span className="brand-eyebrow">PROSET ASANSÖR</span>
+              <span className="brand-eyebrow">PROSET ELEKTRONİK ve ASANSÖR SİSTEMLERİ</span>
               <h2 className="mt-2 text-3xl md:text-4xl font-extrabold">
                 Biz kimiz?
               </h2>
 
               <p className="mt-4 text-white/80">
-                Proset Asansör, modern şehirlerin vazgeçilmez ihtiyacı olan dikey
+               Proset elektronik ve asansör sistemleri, modern şehirlerin vazgeçilmez ihtiyacı olan dikey
                 ulaşım çözümlerini; <b>güven</b>, <b>kalite</b> ve <b>estetik</b> anlayışıyla
                 birleştirerek sunmak amacıyla kurulmuştur. Müşteri güvenliğini ve
                 memnuniyetini merkeze alan yaklaşımımızla; asansör <b>montaj</b>ı,
@@ -72,9 +72,9 @@ export default function AboutPage() {
               </ul>
 
               <div className="mt-6 text-white/85">
-                Proset Asansör olarak, sadece bir asansör değil; uzun yıllar sürecek
+               Proset elektronik ve asansör sistemleri olarak, sadece bir asansör değil; uzun yıllar sürecek
                 <b> güven</b> ve <b>kalite</b>yi sunuyoruz. <br />
-                Hayatınızı kolaylaştıran, güvenle yükselten Proset Asansör ile tanışın:
+                Hayatınızı kolaylaştıran, güvenle yükseltenProset elektronik ve asansör sistemleri ile tanışın:
                 <b> modern tasarım</b>, <b>maksimum güvenlik</b>, <b>kesintisiz hizmet</b>.
               </div>
 
@@ -187,7 +187,7 @@ export default function AboutPage() {
 
           <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-3 lg:gap-4 max-w-4xl mx-auto">
             {[
-              "Yolcu Asansörleri",
+              "İnsan Asansörleri",
               "Panoramik Asansörler",
               "Yük Asansörleri",
               "Hidrolik Asansörler",
@@ -248,7 +248,7 @@ export default function AboutPage() {
             Sizi Yükseklere Biz Taşırız — Siz Güvenle Yükselmenin Keyfini Çıkarın!
           </h3>
           <p className="text-white/80 mt-3 max-w-2xl mx-auto">
-            Proset Asansör ile her kat hayatınıza değer katar. İletişim: <b>0553 277 67 81</b> •{" "}
+           Proset elektronik ve asansör sistemleri ile her kat hayatınıza değer katar. İletişim: <b>0553 277 67 81</b> •{" "}
             <span className="opacity-90">www.prosetasansor.com</span>
           </p>
 

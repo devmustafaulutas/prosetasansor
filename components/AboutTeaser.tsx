@@ -17,7 +17,7 @@ export default function AboutTeaser() {
             </h2>
 
             <p className="mt-4 text-white/80">
-              Proset Asansör; modern şehirlerin dikey ulaşım ihtiyacını <b>montaj</b>, <b>modernizasyon</b> ve
+             Proset elektronik ve asansör sistemleri; modern şehirlerin dikey ulaşım ihtiyacını <b>montaj</b>, <b>modernizasyon</b> ve
               <b> periyodik bakım</b> hizmetleriyle karşılayan, <b>TS EN 81-20/50</b> standartlarıyla uyumlu bir
               mühendislik firmasıdır. Yaşam alanlarından iş merkezlerine, hastanelerden AVM’lere kadar farklı
               ölçeklerde güvenli ve uzun ömürlü çözümler üretiriz.

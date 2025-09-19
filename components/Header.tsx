@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { FaInstagram, FaWhatsapp, FaEnvelope } from "react-icons/fa6";
 import { RxCross2 } from "react-icons/rx";
-import logo from '@/public/logo.png';
+import logo from '@/public/Proset.png';
 
 function ActiveLink({ href, children, onClick }: {
   href: string; children: React.ReactNode; onClick?: () => void;
@@ -34,7 +34,7 @@ function MobileLink({ href, children, onClick }: {
       onClick={onClick}
       className={`block rounded-xl px-4 py-3 text-base font-medium transition
         ${isActive ? 'text-white bg-white/5 ring-1 ring-white/10'
-                   : 'text-neutral-200 hover:text-white hover:bg-white/5 active:bg-white/7'}`}
+          : 'text-neutral-200 hover:text-white hover:bg-white/5 active:bg-white/7'}`}
     >
       {children}
     </Link>
@@ -78,7 +78,7 @@ export default function Header() {
     const readY = () => {
       const l: any = (window as any).lenis;
       return (typeof l?.animatedScroll === 'number' ? l.animatedScroll :
-              typeof l?.scroll === 'number' ? l.scroll : window.scrollY) as number;
+        typeof l?.scroll === 'number' ? l.scroll : window.scrollY) as number;
     };
 
     const headerH = () => inner.offsetHeight || 56;
@@ -137,7 +137,7 @@ export default function Header() {
   }, [open]);
 
   const wa = `https://wa.me/905532776781?text=${encodeURIComponent(
-    'Merhaba, Proset Asansör için bilgi ve teklif almak istiyorum.'
+    'Merhaba,Proset elektronik ve asansör sistemleri için bilgi ve teklif almak istiyorum.'
   )}`;
 
   const IconCls = "text-[16px]";
@@ -152,13 +152,11 @@ export default function Header() {
       {/* DİKKAT: fixed wrapper */}
       <div ref={wrapRef} className="header-fixed header-wrap antialiased">
         <div ref={innerRef} className="mx-auto max-w-[1200px] px-3 sm:px-4 h-14 sm:h-16 flex items-center justify-between gap-3">
-          {/* Logo */}
           <Link href="/" className="flex items-center gap-3">
             <Image
-              src={logo} alt="Proset Asansör" width={180} height={52} priority
+              src={logo} alt="Proset Elektronik ve Asansör Sistemleri" width={100} height={48} priority
               className="h-12 sm:h-14 w-auto object-contain [image-rendering:-webkit-optimize-contrast]"
             />
-            <span className="hidden sm:inline font-semibold text-white">Proset Asansör</span>
           </Link>
 
           {/* Desktop nav */}
@@ -217,7 +215,7 @@ export default function Header() {
               <div className="flex items-center gap-2">
                 <Image src={logo} alt="Proset Asansör" width={120} height={36}
                   className="h-8 w-auto [filter:drop-shadow(0_0_10px_rgba(255,255,255,.06))] [filter:brightness(1.05)]" />
-                <span className="font-semibold text-white">Proset Asansör</span>
+                <span className="font-semibold text-white"> Proset elektronik ve asansör sistemleri</span>
               </div>
               <button onClick={() => setOpen(false)} aria-label="Menüyü kapat" className="icon-btn">
                 <RxCross2 className="text-white" size={20} />
@@ -237,9 +235,9 @@ export default function Header() {
               <div className="grid grid-cols-4 gap-3">
                 {socials.map(({ href, label, node }, i) => (
                   <a key={i} href={href} target={/^https?:/i.test(href) ? '_blank' : undefined}
-                     rel={/^https?:/i.test(href) ? 'noreferrer' : undefined}
-                     aria-label={label}
-                     className="inline-flex h-12 w-full items-center justify-center rounded-xl
+                    rel={/^https?:/i.test(href) ? 'noreferrer' : undefined}
+                    aria-label={label}
+                    className="inline-flex h-12 w-full items-center justify-center rounded-xl
                                 border border-neutral-800 bg-[#12151b] text-neutral-300
                                 hover:text-[var(--brand)] hover:bg-white/6 hover:border-[var(--brand)]/40 transition">
                     {node}

@@ -72,7 +72,7 @@ export default function AboutShowcase() {
             >
               <Image
                 src={elevator}
-                alt="Proset Asansör — modern asansör kabini"
+                alt="Proset Elektronik ve Asansör Sistemleri — modern asansör kabini"
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -98,13 +98,13 @@ export default function AboutShowcase() {
 
           {/* Metin */}
           <div className="about-anim">
-            <span className="brand-eyebrow">PROSET ASANSÖR</span>
+            <span className="brand-eyebrow">PROSET ELEKTRONİK VE ASANSÖR SİSTEMLERİ</span>
             <h2 className="mt-2 text-3xl md:text-4xl font-extrabold tracking-tight">
               Biz kimiz?
             </h2>
 
             <p className="mt-4 text-white/85">
-              Proset Asansör; modern şehirlerin dikey ulaşım ihtiyacını <b>montaj</b>,{" "}
+             Proset elektronik ve asansör sistemleri; modern şehirlerin dikey ulaşım ihtiyacını <b>montaj</b>,{" "}
               <b>modernizasyon</b> ve <b>periyodik bakım</b> hizmetleriyle karşılayan,
               <b> TS EN 81-20/50</b> standartlarıyla uyumlu bir mühendislik firmasıdır.
               Konutlardan iş merkezlerine, hastanelerden AVM’lere kadar güvenli ve uzun ömürlü

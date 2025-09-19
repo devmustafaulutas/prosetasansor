@@ -68,7 +68,7 @@ function buildSummary({
     'Mesaj:',
     form.message || '(boş)',
     '',
-    `— Proset Asansör web formu • ${new Date().toLocaleString('tr-TR')}`,
+    `—Proset elektronik ve asansör sistemleri web formu • ${new Date().toLocaleString('tr-TR')}`,
   ];
   return lines.join('\n');
 }
@@ -105,7 +105,7 @@ export default function ContactPage() {
   const wa = () => {
     const num = '905532776781';
     const msg =
-      'Merhaba! Proset Asansör web sitesinden ulaşıyorum. Keşif/teklif talep etmek istiyorum.';
+      'Merhaba!Proset elektronik ve asansör sistemleri web sitesinden ulaşıyorum. Keşif/teklif talep etmek istiyorum.';
     window.open(`https://wa.me/${num}?text=${encodeURIComponent(msg)}`, '_blank');
   };
 
@@ -260,7 +260,7 @@ export default function ContactPage() {
                 />
 
                 <div className="rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-white/80">
-                  Proset Asansör: “Her kata güven, her kata kalite.” Modern teknoloji ve güvenliği birleştirerek uzun ömürlü çözümler sunuyoruz.
+                 Proset elektronik ve asansör sistemleri: “Her kata güven, her kata kalite.” Modern teknoloji ve güvenliği birleştirerek uzun ömürlü çözümler sunuyoruz.
                 </div>
 
                 <div className="flex flex-wrap gap-2">
@@ -402,7 +402,7 @@ export default function ContactPage() {
               className="h-[440px] w-full"
               src="https://www.google.com/maps?q=Etimesgut,Ankara&output=embed"
               loading="lazy"
-              title="Google Maps – Proset Asansör"
+              title="Google Maps –Proset elektronik ve asansör sistemleri"
             />
           </div>
         </div>
