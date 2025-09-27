@@ -1,10 +1,11 @@
 'use client';
+
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { FaInstagram, FaWhatsapp, FaEnvelope } from "react-icons/fa6";
 import { RxCross2 } from "react-icons/rx";
+import Brand from './Brand';
 
 function ActiveLink({ href, children, onClick }: {
   href: string; children: React.ReactNode; onClick?: () => void;
@@ -33,14 +34,14 @@ function MobileLink({ href, children, onClick }: {
       onClick={onClick}
       className={`block rounded-xl px-4 py-3 text-base font-medium transition
         ${isActive ? 'text-white bg-white/5 ring-1 ring-white/10'
-                   : 'text-neutral-200 hover:text-white hover:bg-white/5 active:bg-white/7'}`}
+          : 'text-neutral-200 hover:text-white hover:bg-white/5 active:bg-white/7'}`}
     >
       {children}
     </Link>
   );
 }
 
-export default function Header() {
+export default function Header({ onDark = true }: { onDark?: boolean }) {
   const [open, setOpen] = React.useState(false);
   const wrapRef = React.useRef<HTMLDivElement | null>(null);
   const innerRef = React.useRef<HTMLDivElement | null>(null);
@@ -77,18 +78,13 @@ export default function Header() {
     const readY = () => {
       const l: any = (window as any).lenis;
       return (typeof l?.animatedScroll === 'number' ? l.animatedScroll :
-              typeof l?.scroll === 'number' ? l.scroll : window.scrollY) as number;
+        typeof l?.scroll === 'number' ? l.scroll : window.scrollY) as number;
     };
 
     const headerH = () => inner.offsetHeight || 56;
 
-    const show = () => {
-      // fixed versiyonda class ile kontrol
-      wrap.classList.remove('header-fixed--hidden');
-    };
-    const hide = () => {
-      wrap.classList.add('header-fixed--hidden');
-    };
+    const show = () => wrap.classList.remove('header-fixed--hidden');
+    const hide = () => wrap.classList.add('header-fixed--hidden');
     const applyBlur = (y: number) => {
       if (y > 12) wrap.classList.add('header-blur');
       else wrap.classList.remove('header-blur');
@@ -136,7 +132,7 @@ export default function Header() {
   }, [open]);
 
   const wa = `https://wa.me/905532776781?text=${encodeURIComponent(
-    'Merhaba, Proset Asansör için bilgi ve teklif almak istiyorum.'
+    'Merhaba, Proset Elektronik ve Asansör Sistemleri için bilgi ve teklif almak istiyorum.'
   )}`;
 
   const IconCls = "text-[16px]";
@@ -151,14 +147,9 @@ export default function Header() {
       {/* DİKKAT: fixed wrapper */}
       <div ref={wrapRef} className="header-fixed header-wrap antialiased">
         <div ref={innerRef} className="mx-auto max-w-[1200px] px-3 sm:px-4 h-14 sm:h-16 flex items-center justify-between gap-3">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-3">
-            <Image
-              src="/logo.png" alt="Proset Asansör" width={180} height={52} priority
-              className="h-12 sm:h-14 w-auto object-contain [image-rendering:-webkit-optimize-contrast]"
-            />
-            <span className="hidden sm:inline font-semibold text-white">Proset Asansör</span>
-          </Link>
+          {/* koyu arka plan: beyaz logo, açık arka plan: renkli */}
+          <Brand size="md" showText />
+
 
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-6">
@@ -213,11 +204,7 @@ export default function Header() {
                             pt-[max(16px,env(safe-area-inset-top))] pb-[max(16px,env(safe-area-inset-bottom))]
                             px-5 flex flex-col">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Image src="/logo.png" alt="Proset Asansör" width={120} height={36}
-                  className="h-8 w-auto [filter:drop-shadow(0_0_10px_rgba(255,255,255,.06))] [filter:brightness(1.05)]" />
-                <span className="font-semibold text-white">Proset Asansör</span>
-              </div>
+              <Brand size="md" showText />
               <button onClick={() => setOpen(false)} aria-label="Menüyü kapat" className="icon-btn">
                 <RxCross2 className="text-white" size={20} />
               </button>
@@ -236,11 +223,11 @@ export default function Header() {
               <div className="grid grid-cols-4 gap-3">
                 {socials.map(({ href, label, node }, i) => (
                   <a key={i} href={href} target={/^https?:/i.test(href) ? '_blank' : undefined}
-                     rel={/^https?:/i.test(href) ? 'noreferrer' : undefined}
-                     aria-label={label}
-                     className="inline-flex h-12 w-full items-center justify-center rounded-xl
-                                border border-neutral-800 bg-[#12151b] text-neutral-300
-                                hover:text-[var(--brand)] hover:bg-white/6 hover:border-[var(--brand)]/40 transition">
+                    rel={/^https?:/i.test(href) ? 'noreferrer' : undefined}
+                    aria-label={label}
+                    className="inline-flex h-12 w-full items-center justify-center rounded-xl
+                              border border-neutral-800 bg-[#12151b] text-neutral-300
+                              hover:text-[var(--brand)] hover:bg-white/6 hover:border-[var(--brand)]/40 transition">
                     {node}
                   </a>
                 ))}

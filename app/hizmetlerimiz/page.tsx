@@ -6,25 +6,24 @@ import { WhatsAppButton } from "@/components/whatsapp-button";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
-  Wrench,
-  Award,
-  CheckCircle2,
-  Accessibility,
-  TrendingUp,
-  FileSearch,
-  FileCheck,
-  Shield,
-  Clock,
-  Phone,
+  Wrench, Award, CheckCircle2, Accessibility, TrendingUp, FileSearch, FileCheck,
+  Shield, Clock, Phone,
 } from "lucide-react";
 import PageHeader from "@/components/PageHeader";
+import hero from "@/public/asansor-1.jpg";
+import imgMontaj from "@/public/ccccc.jpeg";
+import imgModern from "@/public/elevator-modernization-with-digital-displays-and-s.jpg";
+import imgBakim from "@/public/professional-elevator-technician-team-working.jpg";
+import imgEngelli from "@/public/modern-wheelchair-accessible-platform-lift-with-sa.jpg";
+import imgYuruyen from "@/public/modern-escalator-with-led-lighting-and-glass-raili.jpg";
+import imgProje from "@/public/asansor-2.webp";
 
 /* ── DATA ─────────────────────────────────────────────────────────────── */
 type Service = {
   key: string;
   title: string;
   href: string;
-  image: string;
+  image: string;           // string kalsın
   icon: React.ReactNode;
   bullets: string[];
 };
@@ -34,7 +33,7 @@ const SERVICES: Service[] = [
     key: "montaj",
     title: "Montaj & Kurulum",
     href: "/iletisim?konu=montaj",
-    image: "/ccccc.jpeg",
+    image: imgMontaj.src,
     icon: <Wrench className="h-5 w-5 text-red-500" />,
     bullets: [
       "TS EN 81-20/50’e uygun kurulum ve test",
@@ -46,7 +45,7 @@ const SERVICES: Service[] = [
     key: "modernizasyon",
     title: "Modernizasyon",
     href: "/iletisim?konu=modernizasyon",
-    image: "/elevator-modernization-with-digital-displays-and-s.jpg",
+    image: imgModern.src,
     icon: <Award className="h-5 w-5 text-red-500" />,
     bullets: [
       "Güvenlik ekipmanlarının güncellenmesi",
@@ -58,7 +57,7 @@ const SERVICES: Service[] = [
     key: "bakim",
     title: "Bakım & Onarım",
     href: "/iletisim?konu=bakim",
-    image: "/professional-elevator-technician-team-working.jpg",
+    image: imgBakim.src,
     icon: <CheckCircle2 className="h-5 w-5 text-red-500" />,
     bullets: [
       "Periyodik bakım ve detaylı raporlama",
@@ -70,7 +69,7 @@ const SERVICES: Service[] = [
     key: "engelli",
     title: "Engelli Platformları",
     href: "/iletisim?konu=engelli-platformu",
-    image: "/modern-wheelchair-accessible-platform-lift-with-sa.jpg",
+    image: imgEngelli.src,
     icon: <Accessibility className="h-5 w-5 text-red-500" />,
     bullets: [
       "İç/dış mekân çözümleri",
@@ -82,7 +81,7 @@ const SERVICES: Service[] = [
     key: "yuruyen-merdiven",
     title: "Yürüyen Merdiven",
     href: "/iletisim?konu=yuruyen-merdiven",
-    image: "/modern-escalator-with-led-lighting-and-glass-raili.jpg",
+    image: imgYuruyen.src,
     icon: <TrendingUp className="h-5 w-5 text-red-500" />,
     bullets: [
       "Otomatik hız modu ve enerji tasarrufu",
@@ -94,7 +93,7 @@ const SERVICES: Service[] = [
     key: "projelendirme",
     title: "Projelendirme & Danışmanlık",
     href: "/iletisim?konu=projelendirme",
-    image: "/asansor-2.webp",
+    image: imgProje.src,
     icon: <FileSearch className="h-5 w-5 text-red-500" />,
     bullets: [
       "Yerinde keşif ve ihtiyaç analizi",
@@ -104,15 +103,15 @@ const SERVICES: Service[] = [
   },
 ];
 
+
 /* ── PAGE ─────────────────────────────────────────────────────────────── */
 export default function ServicesPage() {
   return (
     <div className="min-h-screen bg-muted\/30 text-foreground">
       <WhatsAppButton />
-
       <PageHeader
         title="Hizmetlerimiz"
-        bgImage="/asansor-1.jpg"
+        bgImage={hero.src}
         objectPosition="50% 45%"
       />
       {/* HİZMET KARTLARI */}

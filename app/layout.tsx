@@ -25,7 +25,7 @@ export default function RootLayout({
     <html lang="tr" className="dark" suppressHydrationWarning>
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
         <SmoothScrollProvider>
-          <Header />
+          <Header onDark/>
           <Suspense fallback={null}>{children}</Suspense>
           <Footer />
           <Analytics />

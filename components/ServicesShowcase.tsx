@@ -1,18 +1,22 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
+import Image, { type StaticImageData } from "next/image";
 import Link from "next/link";
 import { ArrowRight, Wrench, Award, CheckCircle } from "lucide-react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+import imgMontaj from "@/public/ccccc.jpeg";
+import imgModern from "@/public/ggggg.jpeg";
+import imgBakim from "@/public/professional-elevator-technician-team-working.jpg";
 
 gsap.registerPlugin(ScrollTrigger);
 
 type Card = {
   title: string;
   href: string;
-  img: string;
+  img: StaticImageData; // <Image src={...} /> ile uyumlu
   bullets: string[];
   icon: React.ReactNode;
 };
@@ -21,7 +25,7 @@ const CARDS: Card[] = [
   {
     title: "Montaj & Kurulum",
     href: "/hizmetlerimiz",
-    img: "/ccccc.jpeg", // ✅ klasörden seçildi
+    img: imgMontaj,
     bullets: [
       "TS EN 81-20/50’e uygun kurulum ve test",
       "Şantiye koordinasyonu, CE dokümantasyonu",
@@ -32,7 +36,7 @@ const CARDS: Card[] = [
   {
     title: "Modernizasyon",
     href: "/hizmetlerimiz",
-    img: "/ggggg.jpeg", // ✅ klasörden seçildi
+    img: imgModern,
     bullets: [
       "Güvenlik ekipmanlarının güncellenmesi",
       "Enerji verimli sürücüler & LED aydınlatma",
@@ -43,7 +47,7 @@ const CARDS: Card[] = [
   {
     title: "Bakım & Onarım",
     href: "/hizmetlerimiz",
-    img: "/professional-elevator-technician-team-working.jpg", // ✅ klasörden seçildi
+    img: imgBakim,
     bullets: [
       "Periyodik bakım & detaylı raporlama",
       "Orijinal yedek parçayla onarım",
@@ -52,6 +56,7 @@ const CARDS: Card[] = [
     icon: <CheckCircle className="h-5 w-5 text-red-500" />,
   },
 ];
+
 
 export default function ServicesShowcase() {
   const ref = React.useRef<HTMLElement | null>(null);
@@ -91,7 +96,6 @@ export default function ServicesShowcase() {
               href={c.href}
               className="srv-card group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5"
             >
-              {/* Görsel */}
               <div className="relative h-48 w-full">
                 <Image
                   src={c.img}
@@ -103,7 +107,6 @@ export default function ServicesShowcase() {
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
               </div>
 
-              {/* İçerik */}
               <div className="p-6">
                 <div className="mb-2 inline-flex items-center gap-2 text-sm text-white/80">
                   {c.icon}

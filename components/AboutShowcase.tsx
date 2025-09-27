@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Shield, Sparkles, Wrench, ArrowRight } from "lucide-react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import elevator from "@/public/elevator.jpg"
+import elevatorbutton from "@/public/elevator-button.jpg"
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -69,8 +71,8 @@ export default function AboutShowcase() {
               className="about-anim relative aspect-[16/10] w-full overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-xl"
             >
               <Image
-                src="/elevator.jpg"
-                alt="Proset Asansör — modern asansör kabini"
+                src={elevator}
+                alt="Proset Elektronik ve Asansör Sistemleri — modern asansör kabini"
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -84,7 +86,7 @@ export default function AboutShowcase() {
             >
               <div className="relative aspect-[4/3] w-full">
                 <Image
-                  src="/elevator-button.jpg"
+                  src={elevatorbutton}
                   alt="Asansör çağrı butonu — detay"
                   fill
                   className="object-cover"
@@ -96,13 +98,13 @@ export default function AboutShowcase() {
 
           {/* Metin */}
           <div className="about-anim">
-            <span className="brand-eyebrow">PROSET ASANSÖR</span>
+            <span className="brand-eyebrow">PROSET ELEKTRONİK VE ASANSÖR SİSTEMLERİ</span>
             <h2 className="mt-2 text-3xl md:text-4xl font-extrabold tracking-tight">
               Biz kimiz?
             </h2>
 
             <p className="mt-4 text-white/85">
-              Proset Asansör; modern şehirlerin dikey ulaşım ihtiyacını <b>montaj</b>,{" "}
+             Proset elektronik ve asansör sistemleri; modern şehirlerin dikey ulaşım ihtiyacını <b>montaj</b>,{" "}
               <b>modernizasyon</b> ve <b>periyodik bakım</b> hizmetleriyle karşılayan,
               <b> TS EN 81-20/50</b> standartlarıyla uyumlu bir mühendislik firmasıdır.
               Konutlardan iş merkezlerine, hastanelerden AVM’lere kadar güvenli ve uzun ömürlü
