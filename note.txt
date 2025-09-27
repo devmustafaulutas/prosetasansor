@@ -1,4 +1,3 @@
-Öncelikle tüm sayfalarda logomuzun büyük harfllere yazılmasını sayfadaki en görünür yazının firma ismi olmasını istiyorum logomuzdaki  SET renginden dolayı görünmüyor ise beyaz renkte yapabliriz. 
 GİRİŞ SAYFASI:
 
 S EN 81-20/50 standartlarıyla yüksek mühendislik standartlarına uyumlu bir asansör firmasıyız. Kuruluşumuzdan bu yana, müşteri memnuniyetini ve güvenliğini temel alan bir anlayışla hareket ediyor, asansör sektöründe öncü ve yenilikçi projelere imza atıyoruz. Konutlardan iş merkezlerine, hastanelerden alışveriş merkezlerine kadar farklı ölçeklerdeki projelerde güvenli ve uzun ömürlü çözümler üretiyoruz.

@@ -284,6 +284,41 @@ html,
 body {
   overflow-x: hidden;
 }
+/* Logonun çevresinde çok ince, gözü yormayan bir halo */
+.logo-aura {
+  position: relative;
+  /* padding yok; kutu logoya “sıkı” sarılır */
+}
+.logo-aura::before {
+  content: "";
+  position: absolute;
+  inset: -2px;                 /* sadece 2px taşsın */
+  border-radius: inherit;
+  pointer-events: none;
+  /* merkezde hafif aydınlatma, kenara doğru sönsün */
+  background: radial-gradient(closest-side, rgba(255,255,255,.14), transparent 70%);
+  filter: blur(2px);
+  opacity: .55;
+}
+
+/* PNG kenarlarını belirginleştiren mikro kontur + hafif gölge */
+.logo-img {
+  image-rendering: -webkit-optimize-contrast;
+  filter:
+    drop-shadow(0 0 .9px rgba(255,255,255,.65))   /* ince beyaz kontur */
+    drop-shadow(0 1px 1px rgba(0,0,0,.6));        /* altta minik gölge */
+}
+
+
+.logo-aura::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+  backdrop-filter: brightness(1.15) contrast(1.05);
+}
+
 
 :root {
   --brand: var(--accent);
@@ -418,7 +453,12 @@ html, body { overflow-x: hidden; }
   letter-spacing: -0.02em;
   font-size: x-large;
 }
-
+.brand-img {
+  image-rendering: -webkit-optimize-contrast;
+  filter:
+    drop-shadow(0 0 .6px rgba(255,255,255,.7))
+    drop-shadow(0 1px .8px rgba(0,0,0,.55));
+}
 /* --- Kırmızı vurgulu kelimeler: SADECE gradient, gölgesiz --- */
 .brand-grad{
   background: linear-gradient(90deg,#f82a3b 0%, #fa182b 100%);
@@ -491,4 +531,20 @@ body.has-fixed-header { padding-top: var(--header-h); }
   backdrop-filter: blur(6px);
   background: rgba(0,0,0,.55);
   border-bottom-color: rgba(255,255,255,.08);
+}
+
+
+
+/* cam header tonu */
+.header-fixed {
+  position: fixed; inset: 0 0 auto 0; z-index: 50;
+  transition: transform .25s, background-color .2s, border-color .2s;
+}
+.header-wrap {
+  background: rgba(8, 10, 14, .35);         /* saydam */
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  backdrop-filter: blur(10px) saturate(140%);
+}
+.header-blur {                               
+  background: rgba(8, 10, 14, .55);
 }

@@ -8,8 +8,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/components/ui/use-toast';
-import hero from "@/public/asansor-1.jpg";
-
+import hero from '@/public/asansor-1.jpg';
 
 import {
   Phone,
@@ -19,7 +18,7 @@ import {
   Send,
   Shield,
   Sparkles,
-  Wrench
+  Wrench,
 } from 'lucide-react';
 
 /* --------- TİPLER --------- */
@@ -37,7 +36,7 @@ const TOPICS: Topic[] = [
   'Bakım',
   'Engelli Platformu',
   'Yürüyen Merdiven',
-  'Projelendirme'
+  'Projelendirme',
 ];
 
 type Mode = 'Teklif' | 'Servis' | 'Genel';
@@ -50,14 +49,21 @@ type FormState = {
   website: string; // honeypot
 };
 
-/* --------- STATİK MOD İÇİN SABİTLER --------- */
+/* --------- AYARLAR --------- */
 const CONTACT_MODE = process.env.NEXT_PUBLIC_CONTACT_MODE ?? 'disabled'; // 'disabled' | 'api'
+const CONTACT_API = process.env.NEXT_PUBLIC_CONTACT_API || ''; // serverless endpoint
 const CONTACT_EMAIL = 'prosetasansor@gmail.com';
 
-/* --------- YARDIMCI FONKSİYONLAR --------- */
+/* --------- HELPER (mailto fallback) ---------- */
 function buildSummary({
-  mode, topics, form
-}: { mode: Mode; topics: Topic[]; form: FormState }) {
+  mode,
+  topics,
+  form,
+}: {
+  mode: Mode;
+  topics: Topic[];
+  form: FormState;
+}) {
   const lines = [
     `📝 Mod: ${mode}`,
     topics.length ? `📌 Konular: ${topics.join(', ')}` : `📌 Konular: (seçilmedi)`,
@@ -79,6 +85,7 @@ function buildMailto({ subject, body }: { subject: string; body: string }) {
   return `mailto:${CONTACT_EMAIL}?subject=${s}&body=${b}`;
 }
 
+/* =================== SAYFA =================== */
 export default function ContactPage() {
   const [mode, setMode] = React.useState<Mode>('Teklif');
   const [topics, setTopics] = React.useState<Topic[]>([]);
@@ -89,7 +96,7 @@ export default function ContactPage() {
     phone: '',
     email: '',
     message: '',
-    website: '' // honeypot
+    website: '', // honeypot
   });
 
   const { toast } = useToast();
@@ -105,7 +112,7 @@ export default function ContactPage() {
   const wa = () => {
     const num = '905532776781';
     const msg =
-      'Merhaba!Proset elektronik ve asansör sistemleri web sitesinden ulaşıyorum. Keşif/teklif talep etmek istiyorum.';
+      'Merhaba! Proset elektronik ve asansör sistemleri web sitesinden ulaşıyorum. Keşif/teklif talep etmek istiyorum.';
     window.open(`https://wa.me/${num}?text=${encodeURIComponent(msg)}`, '_blank');
   };
 
@@ -113,41 +120,35 @@ export default function ContactPage() {
     mode === 'Teklif'
       ? 'Projeniz için temel bilgileri paylaşın; hızla fiyat & süre çıkaralım.'
       : mode === 'Servis'
-        ? 'Arıza/bakım talepleriniz için ekip yönlendirelim.'
-        : 'Sorularınız ve geri bildirimleriniz için bize yazın.';
+      ? 'Arıza/bakım talepleriniz için ekip yönlendirelim.'
+      : 'Sorularınız ve geri bildirimleriniz için bize yazın.';
 
   const messagePH =
     mode === 'Teklif'
       ? 'Proje adresi, kat sayısı, kullanım amacı, mevcut durum vb.'
       : mode === 'Servis'
-        ? 'Arıza/belirti, marka/model, adres, erişim bilgisi vb.'
-        : 'Kısa mesajınızı yazın…';
+      ? 'Arıza/belirti, marka/model, adres, erişim bilgisi vb.'
+      : 'Kısa mesajınızı yazın…';
 
   /* --------- GÖNDER --------- */
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
+    const subject = `[Web İletişim • ${mode}] ${form.name || 'İsimsiz'}`;
+
     // ❗ API KAPALI: mailto + clipboard + toast
-    if (CONTACT_MODE === 'disabled') {
+    if (CONTACT_MODE === 'disabled' || !CONTACT_API) {
       try {
-        const subject = `[Web İletişim • ${mode}] ${form.name || 'İsimsiz'}`;
         const body = buildSummary({ mode, topics, form });
-
-        // Panoya kopyala (izin olmazsa sorun değil)
-        try { await navigator.clipboard?.writeText(body); } catch { }
-
-        // Mail uygulamasını aç
+        try { await navigator.clipboard?.writeText(body); } catch {}
         const url = buildMailto({ subject, body });
         window.location.href = url;
-
         toast({
           variant: 'success',
           title: 'E-posta uygulamanız açılıyor',
           description: 'Mesaj içeriği panoya da kopyalandı. Göndermeden önce kontrol edebilirsiniz.',
         });
-
-        // form reset
         setForm({ name: '', phone: '', email: '', message: '', website: '' });
         setTopics([]);
       } catch (err: any) {
@@ -162,18 +163,18 @@ export default function ContactPage() {
       return;
     }
 
-    // ✅ API AÇIK: mevcut POST akışı
+    // ✅ API AÇIK: serverless SMTP (Vercel/Netlify)
     try {
-      const res = await fetch('/api/contact', {
+      const res = await fetch(CONTACT_API, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, topics, mode })
+        // HTML şablonu serverda üretilecek; biz sadece data gönderiyoruz
+        body: JSON.stringify({ ...form, topics, mode }),
       });
       const data = await res.json();
 
       if (!res.ok || !data?.ok) {
-        const msg = data?.error || 'Gönderim başarısız';
-        throw new Error(msg);
+        throw new Error(data?.error || 'Gönderim başarısız');
       }
 
       toast({
@@ -198,11 +199,7 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen">
       <WhatsAppButton />
-      <PageHeader
-        title="İletişim"
-        bgImage={hero.src}
-        objectPosition="50% 45%"
-      />
+      <PageHeader title="İletişim" bgImage={hero.src} objectPosition="50% 45%" />
 
       {/* Üst vaat pill'leri */}
       <section className="bg-muted/30">
@@ -211,7 +208,7 @@ export default function ContactPage() {
             {[
               { Icon: Shield, t: 'Güvenlik standartlarına uygun çözümler' },
               { Icon: Sparkles, t: 'Modern ve estetik tasarımlar' },
-              { Icon: Wrench, t: 'Uzman bakım & servis desteği' }
+              { Icon: Wrench, t: 'Uzman bakım & servis desteği' },
             ].map(({ Icon, t }, i) => (
               <span
                 key={i}
@@ -260,7 +257,7 @@ export default function ContactPage() {
                 />
 
                 <div className="rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-white/80">
-                 Proset elektronik ve asansör sistemleri: “Her kata güven, her kata kalite.” Modern teknoloji ve güvenliği birleştirerek uzun ömürlü çözümler sunuyoruz.
+                  Proset elektronik ve asansör sistemleri: “Her kata güven, her kata kalite.” Modern teknoloji ve güvenliği birleştirerek uzun ömürlü çözümler sunuyoruz.
                 </div>
 
                 <div className="flex flex-wrap gap-2">
@@ -296,7 +293,7 @@ export default function ContactPage() {
                 </div>
 
                 {/* API kapalı bilgilendirme şeridi */}
-                {CONTACT_MODE === 'disabled' && (
+                {(!CONTACT_API || CONTACT_MODE === 'disabled') && (
                   <div className="mx-6 mt-4 mb-1 rounded-lg border border-yellow-500/30 bg-yellow-500/10 px-4 py-2 text-sm text-yellow-200">
                     Şu anda çevrim içi form gönderimi geçici olarak kapalı. <b>“Mesajı Gönder”</b> butonu e-posta uygulamanızı açacaktır. Alternatif olarak WhatsApp’tan yazabilirsiniz.
                   </div>
@@ -313,7 +310,7 @@ export default function ContactPage() {
                     type="tel"
                     value={form.phone}
                     onChange={onChange}
-                    pattern="^\+?\d[\d\s]{9,}$"
+                    pattern="^\\+?\\d[\\d\\s]{9,}$"
                     title="Örn: +90555 222 33 44"
                     required
                   />
@@ -359,7 +356,11 @@ export default function ContactPage() {
                       maxLength={1000}
                       value={form.message}
                       onChange={onChange}
-                      placeholder={messagePH}
+                      placeholder={mode === 'Teklif'
+                        ? 'Proje adresi, kat sayısı, kullanım amacı, mevcut durum vb.'
+                        : mode === 'Servis'
+                          ? 'Arıza/belirti, marka/model, adres, erişim bilgisi vb.'
+                          : 'Kısa mesajınızı yazın…'}
                       className="tech-border resize-none"
                       required
                     />
@@ -469,7 +470,7 @@ function InfoRow({
   icon,
   title,
   body,
-  action
+  action,
 }: {
   icon: React.ReactNode;
   title: string;
@@ -478,7 +479,9 @@ function InfoRow({
 }) {
   return (
     <div className="flex items-start gap-3 rounded-xl border border-white/10 bg-white/5 p-4">
-      <div className="grid h-10 w-10 place-items-center rounded-lg bg-red-500/15 text-red-500">{icon}</div>
+      <div className="grid h-10 w-10 place-items-center rounded-lg bg-red-500/15 text-red-500">
+        {icon}
+      </div>
       <div className="flex-1">
         <div className="font-semibold">{title}</div>
         <div className="text-white/80">{body}</div>
@@ -499,14 +502,18 @@ function BadgePill({ children }: { children: React.ReactNode }) {
 function Segmented({
   value,
   onChange,
-  options
+  options,
 }: {
   value: string;
   onChange: (v: any) => void;
   options: string[];
 }) {
   return (
-    <div role="tablist" aria-label="İletişim modu" className="inline-flex rounded-full border border-white/10 bg-white/5 p-1">
+    <div
+      role="tablist"
+      aria-label="İletişim modu"
+      className="inline-flex rounded-full border border-white/10 bg-white/5 p-1"
+    >
       {options.map((o) => {
         const active = o === value;
         return (
@@ -516,8 +523,9 @@ function Segmented({
             role="tab"
             aria-selected={active}
             onClick={() => onChange(o)}
-            className={`rounded-full px-3 py-1.5 text-sm transition ${active ? 'bg-white text-black shadow' : 'text-white/80 hover:bg-white/10'
-              }`}
+            className={`rounded-full px-3 py-1.5 text-sm transition ${
+              active ? 'bg-white text-black shadow' : 'text-white/80 hover:bg-white/10'
+            }`}
           >
             {o}
           </button>

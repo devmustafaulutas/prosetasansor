@@ -1,11 +1,11 @@
 'use client';
+
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { FaInstagram, FaWhatsapp, FaEnvelope } from "react-icons/fa6";
 import { RxCross2 } from "react-icons/rx";
-import logo from '@/public/Proset.png';
+import Brand from './Brand';
 
 function ActiveLink({ href, children, onClick }: {
   href: string; children: React.ReactNode; onClick?: () => void;
@@ -41,7 +41,7 @@ function MobileLink({ href, children, onClick }: {
   );
 }
 
-export default function Header() {
+export default function Header({ onDark = true }: { onDark?: boolean }) {
   const [open, setOpen] = React.useState(false);
   const wrapRef = React.useRef<HTMLDivElement | null>(null);
   const innerRef = React.useRef<HTMLDivElement | null>(null);
@@ -83,13 +83,8 @@ export default function Header() {
 
     const headerH = () => inner.offsetHeight || 56;
 
-    const show = () => {
-      // fixed versiyonda class ile kontrol
-      wrap.classList.remove('header-fixed--hidden');
-    };
-    const hide = () => {
-      wrap.classList.add('header-fixed--hidden');
-    };
+    const show = () => wrap.classList.remove('header-fixed--hidden');
+    const hide = () => wrap.classList.add('header-fixed--hidden');
     const applyBlur = (y: number) => {
       if (y > 12) wrap.classList.add('header-blur');
       else wrap.classList.remove('header-blur');
@@ -137,7 +132,7 @@ export default function Header() {
   }, [open]);
 
   const wa = `https://wa.me/905532776781?text=${encodeURIComponent(
-    'Merhaba,Proset elektronik ve asansör sistemleri için bilgi ve teklif almak istiyorum.'
+    'Merhaba, Proset Elektronik ve Asansör Sistemleri için bilgi ve teklif almak istiyorum.'
   )}`;
 
   const IconCls = "text-[16px]";
@@ -152,12 +147,9 @@ export default function Header() {
       {/* DİKKAT: fixed wrapper */}
       <div ref={wrapRef} className="header-fixed header-wrap antialiased">
         <div ref={innerRef} className="mx-auto max-w-[1200px] px-3 sm:px-4 h-14 sm:h-16 flex items-center justify-between gap-3">
-          <Link href="/" className="flex items-center gap-3">
-            <Image
-              src={logo} alt="Proset Elektronik ve Asansör Sistemleri" width={100} height={48} priority
-              className="h-12 sm:h-14 w-auto object-contain [image-rendering:-webkit-optimize-contrast]"
-            />
-          </Link>
+          {/* koyu arka plan: beyaz logo, açık arka plan: renkli */}
+          <Brand size="md" showText />
+
 
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-6">
@@ -212,11 +204,7 @@ export default function Header() {
                             pt-[max(16px,env(safe-area-inset-top))] pb-[max(16px,env(safe-area-inset-bottom))]
                             px-5 flex flex-col">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Image src={logo} alt="Proset Asansör" width={120} height={36}
-                  className="h-8 w-auto [filter:drop-shadow(0_0_10px_rgba(255,255,255,.06))] [filter:brightness(1.05)]" />
-                <span className="font-semibold text-white"> Proset elektronik ve asansör sistemleri</span>
-              </div>
+              <Brand size="md" showText />
               <button onClick={() => setOpen(false)} aria-label="Menüyü kapat" className="icon-btn">
                 <RxCross2 className="text-white" size={20} />
               </button>
@@ -238,8 +226,8 @@ export default function Header() {
                     rel={/^https?:/i.test(href) ? 'noreferrer' : undefined}
                     aria-label={label}
                     className="inline-flex h-12 w-full items-center justify-center rounded-xl
-                                border border-neutral-800 bg-[#12151b] text-neutral-300
-                                hover:text-[var(--brand)] hover:bg-white/6 hover:border-[var(--brand)]/40 transition">
+                              border border-neutral-800 bg-[#12151b] text-neutral-300
+                              hover:text-[var(--brand)] hover:bg-white/6 hover:border-[var(--brand)]/40 transition">
                     {node}
                   </a>
                 ))}

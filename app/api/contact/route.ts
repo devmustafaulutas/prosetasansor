@@ -1,135 +1,175 @@
-export {}
-// import { NextResponse } from "next/server";
-// import nodemailer from "nodemailer";
-// import { contactSchema } from "@/lib/validators/contact";
-// import { rateLimitByIp } from "@/lib/rate-limit";
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
+import nodemailer from 'nodemailer';
 
-// export const runtime = "nodejs";
+// === ENV ===
+// .env: Aşağıdakileri doldur
+// SMTP_HOST=smtp.gmail.com
+// SMTP_PORT=587
+// SMTP_USER=mustafaum538@gmail.com
+// SMTP_PASS=qgmdioawrmnufmcl   # app password (boşluksuz)
+// MAIL_FROM="Proset Asansör <mustafaum538@gmail.com>"
+// MAIL_TO=prosetasansor@gmail.com
+// CONTACT_ALLOWED_ORIGINS=https://prosetasansor.com,https://www.prosetasansor.com,https://senin-vercel-domainin.vercel.app
 
-// function escapeHtml(s: string) {
-//     return s.replace(/[&<>"']/g, (c) => ({
-//         "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
-//     }[c]!));
-// }
+const SMTP_HOST = process.env.SMTP_HOST!;
+const SMTP_PORT = Number(process.env.SMTP_PORT || 587);
+const SMTP_USER = process.env.SMTP_USER!;
+const SMTP_PASS = process.env.SMTP_PASS!;
+const MAIL_FROM  = process.env.MAIL_FROM || `Proset Asansör <${SMTP_USER}>`;
+const MAIL_TO    = process.env.MAIL_TO!;
+const ALLOWED    = (process.env.CONTACT_ALLOWED_ORIGINS || '').split(',').map(s => s.trim()).filter(Boolean);
 
-// async function verifyTurnstile(token?: string) {
-//     const secret = process.env.TURNSTILE_SECRET_KEY;
-//     if (!secret || !token) return true;
-//     try {
-//         const rsp = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
-//             method: "POST",
-//             body: new URLSearchParams({ secret, response: token }),
-//         }).then(r => r.json() as Promise<{ success: boolean }>);
-//         return rsp.success;
-//     } catch {
-//         return false;
-//     }
-// }
+// Basit CORS helper
+function withCors(origin: string | null, status = 200, body?: any) {
+  const headers: Record<string,string> = {
+    'Vary': 'Origin',
+    'Access-Control-Allow-Methods': 'POST,OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+  };
+  if (origin && ALLOWED.some(a => origin === a)) headers['Access-Control-Allow-Origin'] = origin;
+  return new NextResponse(body ? JSON.stringify(body) : null, {
+    status,
+    headers: body ? { 'Content-Type': 'application/json', ...headers } : headers,
+  });
+}
 
-// export async function POST(req: Request) {
-//     try {
-//         const ip =
-//             req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-//             // @ts-ignore
-//             req.ip || "0.0.0.0";
+// Basit HTML şablon
+const esc = (s: string) => (s || '')
+  .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+  .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 
-//         const rl = rateLimitByIp(ip);
-//         if (!rl.ok) {
-//             return NextResponse.json(
-//                 { error: `Lütfen ${rl.retryAfter} sn sonra tekrar deneyin.` },
-//                 { status: 429 }
-//             );
-//         }
+function emailHTML(p: {
+  mode: string; topics: string[]; name: string; phone: string; email: string; message: string;
+}) {
+  const badge = (t: string) =>
+    `<span style="display:inline-block;margin:0 6px 6px 0;padding:6px 10px;border-radius:9999px;background:#ffe2e6;color:#b91c1c;font-weight:600;font-size:12px;border:1px solid #fecdd3;">${esc(t)}</span>`;
+  const topicBadges = p.topics?.length ? p.topics.map(badge).join('') : '<span style="color:#6b7280;">(seçilmedi)</span>';
+  const now = new Date().toLocaleString('tr-TR');
+  return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"/></head>
+<body style="margin:0;background:#0b0e13;">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#0b0e13;padding:24px 12px;">
+<tr><td align="center">
+  <table role="presentation" width="100%" style="max-width:640px;background:#11151b;border:1px solid #1f2937;border-radius:16px;overflow:hidden;">
+    <tr><td style="background:linear-gradient(90deg,#0f1217,#151922);padding:18px 22px;border-bottom:1px solid #1f2937;">
+      <div style="color:#fff;font-weight:800;letter-spacing:.4px;font-size:16px;">PROSET ASANSÖR</div>
+      <div style="color:#fca5a5;font-size:12px;margin-top:2px;">Electronic & Elevators Systems</div>
+    </td></tr>
 
-//         const json = await req.json();
-//         const parsed = contactSchema.safeParse(json);
-//         if (!parsed.success) {
-//             return NextResponse.json(
-//                 { error: "Geçersiz form verisi", issues: parsed.error.flatten() },
-//                 { status: 400 }
-//             );
-//         }
+    <tr><td style="padding:22px 22px 0 22px;">
+      <div style="color:#ffffff;font-size:20px;font-weight:800;line-height:1.3;">Yeni İletişim Formu</div>
+      <div style="color:#d1d5db;font-size:13px;margin-top:4px;">${esc(now)} • Mod: <strong>${esc(p.mode)}</strong></div>
+    </td></tr>
 
-//         const { name, email, phone, message, website, cfToken, mode, topics } = parsed.data;
+    <tr><td style="padding:16px 22px 8px 22px;">
+      <table width="100%" cellpadding="0" cellspacing="0">
+        ${row('Ad Soyad', p.name||'-')}
+        ${gap()}
+        ${row('Telefon', p.phone||'-')}
+        ${gap()}
+        ${row('E-posta', p.email||'-')}
+        ${gap()}
+        <tr><td style="padding:10px 0;color:#9ca3af;font-size:12px;">İlgilendiği Hizmet(ler)</td></tr>
+        <tr><td style="padding:4px 0 0 0;">${topicBadges}</td></tr>
+        ${gap()}
+        ${row('Mesaj', p.message || '(boş)', true)}
+      </table>
+    </td></tr>
 
-//         if (website && website.length > 0) {
-//             return NextResponse.json({ ok: true });
-//         }
+    <tr><td style="padding:18px 22px;border-top:1px solid #1f2937;background:#0f1217;color:#9ca3af;font-size:12px;">
+      Bu e-posta <strong>Proset Asansör</strong> web sitesi iletişim formundan otomatik olarak gönderilmiştir.
+    </td></tr>
+  </table>
+  <div style="color:#6b7280;font-size:11px;margin-top:10px;">© ${new Date().getFullYear()} PROSET</div>
+</td></tr></table>
+</body></html>`;
+  function row(label:string, val:string, pre=false){
+    return `
+    <tr><td style="padding:10px 0;color:#9ca3af;font-size:12px;">${esc(label)}</td></tr>
+    <tr><td style="padding:8px 12px;background:#0f1217;border:1px solid #1f2937;border-radius:10px;color:#f9fafb;font-size:14px;${pre?'white-space:pre-wrap;line-height:1.55;':''}">${esc(val)}</td></tr>`;
+  }
+  function gap(){ return `<tr><td style="height:12px;"></td></tr>`; }
+}
 
-//         const ok = await verifyTurnstile(cfToken);
-//         if (!ok) {
-//             return NextResponse.json({ error: "Doğrulama başarısız." }, { status: 400 });
-//         }
+// Nodemailer transport
+function transporter() {
+  return nodemailer.createTransport({
+    host: SMTP_HOST,
+    port: SMTP_PORT,
+    secure: SMTP_PORT === 465,
+    auth: { user: SMTP_USER, pass: SMTP_PASS },
+  });
+}
 
-//         const transporter = nodemailer.createTransport({
-//             host: process.env.SMTP_HOST,
-//             port: Number(process.env.SMTP_PORT || 587),
-//             secure: Number(process.env.SMTP_PORT) === 465,
-//             auth: {
-//                 user: process.env.SMTP_USER,
-//                 pass: process.env.SMTP_PASS,
-//             },
-//         });
+// --- OPTIONS (CORS preflight) ---
+export async function OPTIONS(req: NextRequest) {
+  const origin = req.headers.get('origin');
+  return withCors(origin, 204);
+}
 
-//         try {
-//             await transporter.verify();
-//         } catch (e: any) {
-//             console.error("SMTP_VERIFY_ERROR", e);
-//             return NextResponse.json(
-//                 { error: "E-posta servisine bağlanılamadı. Lütfen daha sonra tekrar deneyin." },
-//                 { status: 502 }
-//             );
-//         }
+// --- POST ---
+export async function POST(req: NextRequest) {
+  const origin = req.headers.get('origin');
 
-//         const to = process.env.CONTACT_TO || process.env.SMTP_USER!;
-//         const fromName = process.env.MAIL_FROM_NAME || "Web Sitesi";
-//         const from = `"${fromName}" <${process.env.SMTP_USER}>`;
+  // CORS check
+  if (!origin || !ALLOWED.some(a => origin === a)) {
+    return withCors(origin, 403, { ok:false, error:'Origin not allowed' });
+  }
 
-//         const subject = `Yeni İletişim Formu – ${name} (${mode})`;
+  let body: any;
+  try { body = await req.json(); }
+  catch { return withCors(origin, 400, { ok:false, error:'Invalid JSON' }); }
 
-//         const safe = {
-//             name: escapeHtml(name),
-//             email: escapeHtml(email),
-//             phone: escapeHtml(phone),
-//             message: escapeHtml(message),
-//             mode: escapeHtml(mode),
-//             topics: topics.map(escapeHtml)
-//         };
+  const {
+    mode = 'Genel',
+    topics = [],
+    name = '',
+    phone = '',
+    email = '',
+    message = '',
+    website = '', // honeypot
+    // cf_turnstile_token, // istersen ekleyebilirsin
+  } = body || {};
 
-//         await transporter.sendMail({
-//             from,
-//             to,
-//             subject,
-//             text: `Ad Soyad: ${safe.name}
-// E-posta: ${safe.email}
-// Telefon: ${safe.phone}
-// Mod: ${safe.mode}
-// Konular: ${safe.topics.join(", ") || "-"}
+  // Honeypot
+  if (website !== '') return withCors(origin, 200, { ok:true });
 
-// Mesaj:
-// ${safe.message}`,
-//             html: `
-//         <div style="font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;">
-//           <h2 style="margin:0 0 8px;">Web Formu</h2>
-//           <table style="border-collapse:collapse">
-//             <tr><td><b>Ad Soyad</b></td><td style="padding-left:8px">${safe.name}</td></tr>
-//             <tr><td><b>E-posta</b></td><td style="padding-left:8px">${safe.email}</td></tr>
-//             <tr><td><b>Telefon</b></td><td style="padding-left:8px">${safe.phone}</td></tr>
-//             <tr><td><b>Mod</b></td><td style="padding-left:8px">${safe.mode}</td></tr>
-//             <tr><td><b>Konular</b></td><td style="padding-left:8px">${safe.topics.join(", ") || "-"}</td></tr>
-//           </table>
-//           <p style="margin-top:12px;white-space:pre-wrap">${safe.message}</p>
-//         </div>
-//       `,
-//             replyTo: `${name} <${email}>`,
-//         });
+  // Basit doğrulama
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!name || !email || !emailRegex.test(email) || !message) {
+    return withCors(origin, 400, { ok:false, error:'Eksik veya hatalı alan' });
+  }
 
-//         return NextResponse.json({ ok: true });
-//     } catch (err) {
-//         console.error("CONTACT_API_ERROR", err);
-//         return NextResponse.json(
-//             { error: "Mesaj gönderilemedi. Lütfen daha sonra tekrar deneyin." },
-//             { status: 500 }
-//         );
-//     }
-// }
+  // (opsiyonel) Turnstile doğrulaması burada yapılabilir
+
+  // Mail içeriği
+  const subject = `[Web İletişim • ${mode}] ${name || 'İsimsiz'}`;
+  const html = emailHTML({ mode, topics, name, phone, email, message });
+  const text =
+    `📝 Mod: ${mode}
+📌 Konular: ${topics?.length?topics.join(', '):'(seçilmedi)'}
+👤 Ad: ${name}
+📞 Telefon: ${phone||'-'}
+✉️ E-posta: ${email}
+
+Mesaj:
+${message}
+
+—Proset web formu • ${new Date().toLocaleString('tr-TR')}`;
+
+  try {
+    const tx = transporter();
+    await tx.sendMail({
+      from: MAIL_FROM,
+      to: MAIL_TO,
+      subject,
+      text,
+      html,
+      replyTo: `${name} <${email}>`,
+    });
+    return withCors(origin, 200, { ok:true });
+  } catch (e:any) {
+    console.error('mail error', e);
+    return withCors(origin, 500, { ok:false, error:'Mail gönderilemedi' });
+  }
+}
