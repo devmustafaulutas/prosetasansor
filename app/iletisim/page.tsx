@@ -401,7 +401,7 @@ export default function ContactPage() {
           <div className="mx-auto mt-10 max-w-6xl overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-xl">
             <iframe
               className="h-[440px] w-full"
-              src="https://www.google.com/maps?q=Etimesgut,Ankara&output=embed"
+              src="https://www.google.com/maps?q=Selçuklu+Mahallesi+Kurtaran+Sokak,+SİNCAN/ANKARA&output=embed"
               loading="lazy"
               title="Google Maps –Proset elektronik ve asansör sistemleri"
             />
