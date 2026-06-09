@@ -23,7 +23,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="tr" className="dark" suppressHydrationWarning>
-      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
+      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable} has-fixed-header`}>
         <SmoothScrollProvider>
           <Header onDark/>
           <Suspense fallback={null}>{children}</Suspense>

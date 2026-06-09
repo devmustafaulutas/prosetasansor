@@ -8,7 +8,7 @@ const socials = [
 ];
 
 export default function Footer() {
-  const addr = 'KAZIM KARABEKİR MAH. 1682 CAD. 9 B, ETİMESGUT / ANKARA';
+  const addr = 'Selçuklu Mahallesi Kurtaran Sokak 10A SİNCAN /ANKARA';
   const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(addr)}&output=embed`;
 
   return (
@@ -77,10 +77,16 @@ export default function Footer() {
             <h4 className="text-lg font-semibold text-[var(--brand)] mb-4 tracking-tight">İletişim</h4>
             <address className="not-italic">
               <dl className="grid grid-cols-[88px_minmax(0,1fr)] gap-y-1 text-sm">
-                <dt className="text-neutral-400">Telefon :</dt>
+                <dt className="text-neutral-400">Telefon 1 :</dt>
                 <dd>
                   <a className="text-neutral-300 hover:text-white tabular-nums" href="tel:+905532776781">
                     +90 553 277 6781
+                  </a>
+                </dd>
+                <dt className="text-neutral-400">Telefon 2 :</dt>
+                <dd>
+                  <a className="text-neutral-300 hover:text-white tabular-nums" href="tel:+905078781672">
+                    +90 507 878 1672
                   </a>
                 </dd>
 

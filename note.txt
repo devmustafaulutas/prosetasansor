@@ -1,6 +1,14 @@
-GİRİŞ SAYFASI:
+nasayfada logoyu düzenleyememiştik arka planı beyaz olmasın ve büyük olmasın demiştik ekte attığım fotoyu anasayfann ekrandaki fotoğrafıyla degiştirelim ------------ DONE
 
-S EN 81-20/50 standartlarıyla yüksek mühendislik standartlarına uyumlu bir asansör firmasıyız. Kuruluşumuzdan bu yana, müşteri memnuniyetini ve güvenliğini temel alan bir anlayışla hareket ediyor, asansör sektöründe öncü ve yenilikçi projelere imza atıyoruz. Konutlardan iş merkezlerine, hastanelerden alışveriş merkezlerine kadar farklı ölçeklerdeki projelerde güvenli ve uzun ömürlü çözümler üretiyoruz.
-HAKKIMIZDA:
+Yükselişim yerine yükselişin olarak düzeltilecek  --------- DONE
 
-……. kalite ve estetik anlayışıyla birleştirerek sizlere  sunmak amacıyla kurulmuştur. 
+Anasayfadaki bakım onarım fotoğrafını yapay zeka fotoğrafını kaldırıp bizim fotolardan ekleyelim
+
+Hizmetlerimiz bölümündeki montaj ve kurulumda  yapay zeka olsun hepsi aynı olsun ya hepsi yapay zeka yada hepsi bziim fotoğraflarımızdan olsun
+
+
+Size daha önce mail atmıştım tse ve ce ibarelerini sayfaya ekleyelim 
+
+Telefon numarasının altına benim numaramı da ekleyelim 05078781672 ------------ DONE 
+
+Birde galerideki fotoğrafların hepsini silelim ben tek tek mail atacağım size yazılması gerekn ve fotoğraflar karısmasın diye galerideki fotolar alakasız olmuş maalesef -------------- DONE 

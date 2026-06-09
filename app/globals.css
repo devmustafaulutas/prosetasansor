@@ -324,6 +324,12 @@ body {
   --brand: var(--accent);
   --header-h: 56px;
 }
+body.has-fixed-header { padding-top: var(--header-h); }
+
+.overlap-header {
+  margin-top: calc(var(--header-h) * -1);
+  padding-top: var(--header-h);
+}
 
 .overlap-header {
   margin-top: calc(var(--header-h) * -1);
@@ -477,6 +483,34 @@ html, body { overflow-x: hidden; }
   font-size: 2.2rem;
   text-shadow: 0 6px 28px rgba(225,29,47,.35);
 }
+.brand-eyebrow, .brand-eyebrow-hero {
+    text-transform: uppercase;
+    letter-spacing: .22em;
+    opacity: .95;
+    display: inline-block;
+}
+
+.brand-eyebrow-hero {
+    color: #0000;
+    background: linear-gradient(90deg, #f82a3b, #fa182b);
+    -webkit-background-clip: text;
+    background-clip: text;
+    font-size: 2rem;
+    font-weight: 900;
+    text-shadow: none !important;
+    filter: none !important;
+}
+@media (min-width: 48rem) {
+    .md\:block {
+        display: block;
+    }
+}
+.hero-title {
+    letter-spacing: -.02em;
+    font-size: clamp(24px, 2vw, 56px);
+    font-weight: 900;
+    line-height: 1.05;
+}
 /* --- Lead metin beyaz/90 ve okunur --- */
 .hero-lead{
   color: rgba(255,255,255,.92);
@@ -520,26 +554,25 @@ textarea.tech-border:-webkit-autofill:focus {
 body.has-fixed-header { padding-top: var(--header-h); }
 
 .header-fixed {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 2000;
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 2000;
   transform: translate3d(0,0,0);
   transition: transform .22s ease, background-color .25s ease, backdrop-filter .25s ease, border-color .25s ease;
   will-change: transform, backdrop-filter, background-color;
 }
+
 .header-fixed--hidden { transform: translate3d(0,-100%,0); pointer-events: none; }
 
-.header-blur{
-  backdrop-filter: blur(6px);
-  background: rgba(0,0,0,.55);
-  border-bottom-color: rgba(255,255,255,.08);
+.header-wrap {
+  background: rgba(8, 10, 14, .35);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  backdrop-filter: blur(10px) saturate(140%);
+  transition: background-color .25s ease, backdrop-filter .25s ease, border-color .25s ease;
 }
 
+.header-blur { background: rgba(8, 10, 14, .55); }
 
-
-/* cam header tonu */
-.header-fixed {
-  position: fixed; inset: 0 0 auto 0; z-index: 50;
-  transition: transform .25s, background-color .2s, border-color .2s;
-}
 .header-wrap {
   background: rgba(8, 10, 14, .35);         /* saydam */
   border-bottom: 1px solid rgba(255,255,255,.08);
@@ -547,4 +580,7 @@ body.has-fixed-header { padding-top: var(--header-h); }
 }
 .header-blur {                               
   background: rgba(8, 10, 14, .55);
+}
+@media (max-height: 760px) {
+  .hero-bullets { display: none; }
 }

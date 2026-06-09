@@ -253,7 +253,7 @@ export default function ContactPage() {
                 <InfoRow
                   icon={<MapPin className="h-5 w-5" />}
                   title="Adres"
-                  body={<>KAZIM KARABEKİR MAH. 1682 CAD. 9 B <br /> ETİMESGUT / ANKARA</>}
+                  body={<>Selçuklu Mahallesi Kurtaran Sokak 10A  <br /> SİNCAN /ANKARA</>}
                 />
 
                 <div className="rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-white/80">

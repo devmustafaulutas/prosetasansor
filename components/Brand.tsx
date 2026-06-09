@@ -31,23 +31,7 @@ export default function Brand({ showText = true, size = 'md', className }: Props
       aria-label="PROSET Ana Sayfa"
       className={`inline-flex items-center min-w-0 gap-2 lg:gap-3 ${className ?? ''}`}
     >
-      {/* tam logo kadar kutu: padding/rounded yok */}
-      <span
-        className="relative block shrink-0"
-        style={{
-          height: `${h}px`,
-          aspectRatio: `${AR} / 1` // genişlik = yükseklik * AR
-        }}
-      >
-        <Image
-          src={logo}
-          alt="PROSET"
-          fill
-          priority
-          sizes={`${Math.round(h * AR)}px`}
-          className="object-contain brand-img"
-        />
-      </span>
+
 
       {showText && (
         <span className="hidden lg:inline text-white font-semibold tracking-wide leading-none text-[16px]">
